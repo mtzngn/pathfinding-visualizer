@@ -81,9 +81,11 @@ const Visualizer = () => {
         if(clicked) {
             if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
                 e.target.attributes[0].value = "node clicked";
-                if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
-                    node.wall = true;
-                }  
+                nodeArr.forEach((node,i)=>{
+                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                        node.wall = true;
+                    }
+                })
             }
         }
     }
