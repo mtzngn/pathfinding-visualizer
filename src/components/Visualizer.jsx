@@ -60,6 +60,7 @@ const Visualizer = () => {
             nodeArr.push(new Nodes(i,j));
         }
     }
+
     nodeArr.forEach((node,i)=>{
         if(node.x === 15 && node.y === 15){
             node.start = true
@@ -80,21 +81,30 @@ const Visualizer = () => {
         if(clicked) {
             if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
                 e.target.attributes[0].value = "node clicked";
+                if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                    node.wall = true;
+                }  
             }
-
-    
         }
     }
     const handleClick = (e) => {
         if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
             if(e.target.attributes[0].value === "node clicked"){
                 e.target.attributes[0].value = "node"
+                nodeArr.forEach((node,i)=>{
+                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                        node.wall = false;
+                    }
+                })
             } else {
                 e.target.attributes[0].value = "node clicked";
+                nodeArr.forEach((node,i)=>{
+                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                        node.wall = true;
+                    }
+                })
             }
         } 
-
-
     }
     return(
         <StyledContainer clicked={clicked}>
