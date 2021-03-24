@@ -17,7 +17,7 @@ const NavbarComponenet = () => {
             <Navbar.Collapse id="responsive-navbar-nav">            
                 <Nav className="justify-content-between" style={{ flex: 1}}>
                     <NavDropdown title="Algorithms" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.1">A<sup>*</sup> Search</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                     </NavDropdown>
