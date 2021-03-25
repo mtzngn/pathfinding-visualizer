@@ -4,13 +4,16 @@ const aStar = (arr) => {
     arr.forEach((item,i)=>{
         if(item.start == true){
             startPoint = item.x + "-" + item.y;
+            console.log(item)
         }
         if(item.end == true){
             endPoint = item.x + "-" + item.y;
+            console.log(item)
+
         }
     });
 
-    
+
 
 }
 
