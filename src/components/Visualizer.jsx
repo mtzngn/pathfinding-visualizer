@@ -67,16 +67,16 @@ const Visualizer = () => {
         }
         if(node.x === 15 && node.y === 30){
             node.end = true
-
         }
     })
 
     const handleMouseOver = (e) => {
-        let nodeId = parseInt(e.target.attributes.id.value.split("-"))
+        let nodeId = parseInt(e.target.attributes.id.value.split("-"));
+        let nodeClass = e.target.attributes[0].value;
 
         if(clicked) {
             
-            if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
+            if(!(nodeClass === "node start" || nodeClass === "node end")){
                 e.target.attributes[0].value = "node clicked";
                 nodeArr.forEach((node,i)=>{
                     if(node.y === nodeId[0] && node.x === nodeId[1]){
