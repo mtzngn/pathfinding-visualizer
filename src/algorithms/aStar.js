@@ -14,17 +14,34 @@ const aStar = async(arr, setNodes) => {
         }
     });
 
+    for(const item of arr){
+        console.log("calculate the fucking dist")
+        console.log(item.end)
 
-    for(const item of arr) {
-        for(let j = 1; j < 20; j++){
-            if(item.x === startPoint[0] && item.y === startPoint[1] + j){
-                item.visited = true;
-                await sleep(100)
-                await setNodes([...arr])
-            }
+        if(item.end === false){
+            item.targetD =Math.sqrt(Math.pow((item.x - endPoint[0]), 2) + Math.pow((item.y - endPoint[1]),2)); 
+            setNodes([...arr])
 
         }
     }
+
+
+    for(const item of arr) {
+            for(let j = 1; j < 20; j++){
+                if(item.x === startPoint[0] && item.y === startPoint[1] + j){
+                        item.visited = true;
+                        await sleep(100)
+                        await setNodes([...arr])
+
+                }
+    
+            }
+        
+
+
+    }
+
+
 
 
 
