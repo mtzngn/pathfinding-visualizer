@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
+import aStar from "../algorithms/aStar"
 
 const StyledNavbar = styled.div`
 width: 100%;
@@ -8,7 +9,11 @@ height: fit-content;
 
 `
 
-const NavbarComponenet = () => {
+const NavbarComponenet = ({ nodes, setNodes }) => {
+
+    const handleVisualize= () =>{
+        aStar(nodes, setNodes)
+    }
     return(
     <StyledNavbar>
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" >
@@ -26,7 +31,7 @@ const NavbarComponenet = () => {
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                     </NavDropdown>
-                    <Button variant="success" id="btn">Visualize</Button>
+                    <Button variant="success" id="btn" onClick={handleVisualize}>Visualize</Button>
                     <Nav.Link href="#deets" >Clear Walls</Nav.Link>
                     <Nav.Link href="#deets2">Clear Path</Nav.Link>
                     <Nav.Link eventKey={2} href="#memes">Clear Board</Nav.Link>

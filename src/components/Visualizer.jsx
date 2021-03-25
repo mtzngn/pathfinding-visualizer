@@ -46,6 +46,11 @@ align-items: center;
         background-size:cover;
         background-image: url(${targetImg}) ;
     }
+    .visited{
+        background-color:red;
+        animation-name: example;
+        animation-duration: 0.15s;
+    }
     @keyframes example {
         from {transform: scale(0.4)}
         to {transform: scale(1.3)}
@@ -53,31 +58,8 @@ align-items: center;
     }
 `
 
-const Visualizer = () => {
+const Visualizer = ({ nodes, setNodes}) => {
     const [clicked, setClicked] = useState(false);
-    const [nodes, setNodes] = useState([]);
-    let nodeArr = []
-
-    
-    useEffect(()=>{
-        for(let i = 0; i < 31 ; i++){
-            for(let j = 0; j < 48; j++){
-                nodeArr.push(new Nodes(i,j));
-            }
-        }
-        nodeArr.forEach((node,i)=>{
-            if(node.x === 15 && node.y === 15){
-                node.start = true
-            }
-            if(node.x === 15 && node.y === 30){
-                node.end = true
-            }
-        })
-
-        setNodes([...nodeArr])
-    }, [])
- 
-
 
 
     const handleMouseOver = (e) => {
@@ -132,7 +114,12 @@ const Visualizer = () => {
                         cN = "node start"
                     } else if (node.end === true){
                         cN = "node end"
-                    } else {cN = "node"}
+                    } else {
+                        cN = "node"
+                    }
+                    if(node.visited === true){
+                        cN = "node visited"
+                    }
 
                     return(
                     <div key={i} className={cN} 
