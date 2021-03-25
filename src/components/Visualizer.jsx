@@ -46,6 +46,11 @@ align-items: center;
         background-size:cover;
         background-image: url(${targetImg}) ;
     }
+    .visited{
+        background-color:red;
+        animation-name: example;
+        animation-duration: 0.15s;
+    }
     @keyframes example {
         from {transform: scale(0.4)}
         to {transform: scale(1.3)}
@@ -109,7 +114,12 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN = "node start"
                     } else if (node.end === true){
                         cN = "node end"
-                    } else {cN = "node"}
+                    } else {
+                        cN = "node"
+                    }
+                    if(node.visited === true){
+                        cN = "node visited"
+                    }
 
                     return(
                     <div key={i} className={cN} 

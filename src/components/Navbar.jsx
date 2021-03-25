@@ -9,10 +9,10 @@ height: fit-content;
 
 `
 
-const NavbarComponenet = ({ nodes }) => {
+const NavbarComponenet = ({ nodes, setNodes }) => {
 
     const handleVisualize= () =>{
-        aStar(nodes)
+        aStar(nodes, setNodes)
     }
     return(
     <StyledNavbar>

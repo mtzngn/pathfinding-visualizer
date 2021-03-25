@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavbarComponenet nodes={nodes}/>
+      <NavbarComponenet nodes={nodes} setNodes={setNodes}/>
       <div className="info"><h1>info</h1></div>
       <Visualizer nodes={nodes} setNodes={setNodes}/>
     </div>
