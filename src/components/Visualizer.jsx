@@ -114,12 +114,14 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN = "node start"
                     } else if (node.end === true){
                         cN = "node end"
-                    } else {
+                    } else if(node.wall === true) {
                         cN = "node"
-                    }
-                    if(node.visited === true){
+                    } else if(node.visited === true){
                         cN = "node visited"
+                    } else {
+                        cN= "node"
                     }
+                  
 
                     return(
                     <div key={i} className={cN} 

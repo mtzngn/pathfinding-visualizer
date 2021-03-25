@@ -1,5 +1,5 @@
 export default class Nodes {
-    constructor(x, y, targetD, localD, globalD, parent, start, end, visited, wall ) {
+    constructor(x, y, end, targetD, localD, globalD, parent, start, visited, wall ) {
         this.x = x;
         this.y = y;
         this.targetD = targetD;
