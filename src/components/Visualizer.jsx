@@ -71,18 +71,15 @@ const Visualizer = () => {
         }
     })
 
-    const handleMouseDown = (e) => {
-        setClicked(true);
-    }
-    const handleMouseUp = (e) => {
-        setClicked(false);
-    }
     const handleMouseOver = (e) => {
+        let nodeId = parseInt(e.target.attributes.id.value.split("-"))
+
         if(clicked) {
+            
             if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
                 e.target.attributes[0].value = "node clicked";
                 nodeArr.forEach((node,i)=>{
-                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                    if(node.y === nodeId[0] && node.x === nodeId[1]){
                         node.wall = true;
                     }
                 })
@@ -90,18 +87,21 @@ const Visualizer = () => {
         }
     }
     const handleClick = (e) => {
-        if(!(e.target.attributes[0].value === "node start" || e.target.attributes[0].value === "node end")){
-            if(e.target.attributes[0].value === "node clicked"){
+        let nodeId = parseInt(e.target.attributes.id.value.split("-"));
+        let nodeClass = e.target.attributes[0].value;
+
+        if(!(nodeClass === "node start" || nodeClass === "node end")){
+            if(nodeClass === "node clicked"){
                 e.target.attributes[0].value = "node"
                 nodeArr.forEach((node,i)=>{
-                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                    if(node.y === nodeId[0] && node.x === nodeId[1]){
                         node.wall = false;
                     }
                 })
             } else {
                 e.target.attributes[0].value = "node clicked";
                 nodeArr.forEach((node,i)=>{
-                    if(node.y === parseInt(e.target.attributes.id.value.split("-")[0]) && node.x === parseInt(e.target.attributes.id.value.split("-")[1])){
+                    if(node.y === nodeId[0] && node.x === nodeId[1]){
                         node.wall = true;
                     }
                 })
@@ -122,8 +122,8 @@ const Visualizer = () => {
             return(
             <div key={i} className={cN} 
             id={node.x + "-" + node.y} 
-            onMouseDown={handleMouseDown} 
-            onMouseUp={handleMouseUp} 
+            onMouseDown={()=> setClicked(true)} 
+            onMouseUp={()=>  setClicked(false)} 
             onMouseOver={handleMouseOver} 
             clicked={clicked}
             onClick={handleClick}></div>         
