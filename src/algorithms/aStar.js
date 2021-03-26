@@ -5,6 +5,7 @@ const sleep = async(ms) => {
 const aStar = async(arr, setNodes) => {
     let endPoint;
     let visitedNodes = [];
+    let shortestpath = [];
     arr.forEach((item,i)=>{
         if(item.start == true){
             visitedNodes.push(item)
@@ -27,22 +28,24 @@ const aStar = async(arr, setNodes) => {
         for(const item of arr) {
 
             if(item.x === visitedNodes[0].x  && item.y === visitedNodes[0].y - 1){
-                item.visited = true;
-                visitedNodes.push(item)
+                !item.wall && visitedNodes.push(item)
+                
             }
             if(item.x === visitedNodes[0].x - 1 && item.y === visitedNodes[0].y){
-                item.visited = true;
-                visitedNodes.push(item)
+                !item.wall && visitedNodes.push(item)
+
             }
             if(item.x === visitedNodes[0].x && item.y === visitedNodes[0].y + 1){
-                item.visited = true;
-                visitedNodes.push(item)
+                !item.wall && visitedNodes.push(item)
+
     
             }
             if(item.x === visitedNodes[0].x + 1 && item.y === visitedNodes[0].y){
-                item.visited = true;
-                visitedNodes.push(item)
+                !item.wall && visitedNodes.push(item)
+
             }
+            console.log(visitedNodes)
+            
         }
 
         visitedNodes.sort((a,b)=>{
@@ -50,6 +53,15 @@ const aStar = async(arr, setNodes) => {
                 return a.targetD - b.targetD
             }
         })
+        shortestpath.unshift(visitedNodes[0])
+        for(const item of arr) {
+            if(item.x === shortestpath[0].x  && item.y === shortestpath[0].y){
+                item.visited = true;
+            }
+
+        }
+
+
         await setNodes([...arr])
     }
 
