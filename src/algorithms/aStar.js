@@ -3,12 +3,11 @@ const sleep = async(ms) => {
   }
 
 const aStar = async(arr, setNodes) => {
-    let startPoint;
     let endPoint;
     let visitedNodes = [];
     arr.forEach((item,i)=>{
         if(item.start == true){
-            startPoint = [item.x, item.y];
+            visitedNodes.push(item)
         }
         if(item.end == true){
             endPoint = [item.x, item.y];
@@ -24,40 +23,37 @@ const aStar = async(arr, setNodes) => {
         }
     }
 
+    while(visitedNodes[0].targetD !== 0){
+        for(const item of arr) {
 
-    for(const item of arr) {
-            // for(let j = 1; j < 20; j++){
-            //     if(item.x === startPoint[0] && item.y === startPoint[1] + j){
-            //             item.visited = true;
-            //             await sleep(100)
-            //             await setNodes([...arr])
+            if(item.x === visitedNodes[0].x  && item.y === visitedNodes[0].y - 1){
+                item.visited = true;
+                visitedNodes.push(item)
+            }
+            if(item.x === visitedNodes[0].x - 1 && item.y === visitedNodes[0].y){
+                item.visited = true;
+                visitedNodes.push(item)
+            }
+            if(item.x === visitedNodes[0].x && item.y === visitedNodes[0].y + 1){
+                item.visited = true;
+                visitedNodes.push(item)
+    
+            }
+            if(item.x === visitedNodes[0].x + 1 && item.y === visitedNodes[0].y){
+                item.visited = true;
+                visitedNodes.push(item)
+            }
+        }
 
-            //     }
-            // }
-        if(item.x === startPoint[0]  && item.y === startPoint[1] - 1){
-            item.visited = true;
-            visitedNodes.push(item)
-        }
-        if(item.x === startPoint[0] - 1 && item.y === startPoint[1]){
-            item.visited = true;
-            visitedNodes.push(item)
-        }
-        if(item.x === startPoint[0] && item.y === startPoint[1] + 1){
-            item.visited = true;
-            visitedNodes.push(item)
-
-        }
-        if(item.x === startPoint[0] + 1 && item.y === startPoint[1]){
-            item.visited = true;
-            visitedNodes.push(item)
-        }
+        visitedNodes.sort((a,b)=>{
+            if(a.targetD < b.targetD){
+                return a.targetD - b.targetD
+            }
+        })
+        await setNodes([...arr])
     }
-    console.log(visitedNodes.sort((a,b)=>{
-        if(a.targetD < b.targetD){
-            return a.targetD - b.targetD
-        }
-    }))
-    await setNodes([...arr])
+
+
 
 //start from startingpoint
 //check neighboor nodes

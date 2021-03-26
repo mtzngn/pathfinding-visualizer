@@ -21,7 +21,7 @@ function App() {
           if(node.x === 15 && node.y === 15){
               node.start = true
           }
-          if(node.x === 40 && node.y === 15){
+          if(node.x === 45 && node.y === 30){
               node.end = true;
               node.targetD = 0;
           }
