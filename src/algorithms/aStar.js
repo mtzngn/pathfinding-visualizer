@@ -15,87 +15,51 @@ const aStar = async(arr, setNodes) => {
     });
 
     for(const item of arr){
-        if(item.end === false){
+        if(!item.end){
             item.heuristicD = Math.sqrt(Math.pow((endPoint[0] - item.x), 2) + Math.pow((endPoint[1] - item.y),2)); 
             setNodes([...arr])
         }
-    }
-
-    arr.forEach((item,i)=>{
-        if(item.start === true){
+        if(item.start){
             item.localD = 0;
             item.globalD = item.localD + item.heuristicD;
             startNode = item;
             nodesToTest.push(item)
         }
-    });
+    }
 
-    const aStartActivate = () => {
-        while(nodesToTest.length !== 0){
 
+    const aStartActivate = async() => {
+
+        const updateNode = (node1, node2)=>{
+            node1.localD = node2.localD + 1;
+            node1.globalD = node1.localD + node1.heuristicD;
+            node1.parentNode = node2.x + "-" + node2.y;
+        }
+
+        while(nodesToTest){
+            
             for(const item of arr){
-        
-                if(item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y){
-                        if(item.wall === false){
-                            if((nodesToTest[0].localD + 1) < item.localD){
-                                item.localD = nodesToTest[0].localD + 1;
-                                item.globalD = item.localD + item.heuristicD;
-                                item.parentNode = nodesToTest[0].x + "-" + nodesToTest[0].y;
-                            }
-                            if(item.end === false && item.visited === false){
-                                nodesToTest.push(item)
-                            } 
-                            if(item.end === true){return}               
-                        }
-                    
-                }
-                if(item.x === nodesToTest[0].x  && item.y === nodesToTest[0].y - 1 ){
-                    if(item.wall === false){
+
+                let left = item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y;
+                let right = item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y;
+                let up = item.x === nodesToTest[0].x && item.y === nodesToTest[0].y - 1;
+                let down = item.x === nodesToTest[0].x && item.y === nodesToTest[0].y + 1;
+
+                if(!item.wall){
+                    if(left || right || up || down){
                         if((nodesToTest[0].localD + 1) < item.localD){
-                            item.localD = nodesToTest[0].localD + 1;
-                            item.globalD = item.localD + item.heuristicD;
-                            item.parentNode = nodesToTest[0].x + "-" + nodesToTest[0].y;
+                            updateNode(item,nodesToTest[0])
                         }
-        
-                        if(item.end === false && item.visited === false){
+                        if(!item.end && !item.visited){
                             nodesToTest.push(item)
-                        }           
-                        if(item.end === true){return}               
-         
-                    }
-                    
-                }
-                if(item.x === nodesToTest[0].x + 1 && item.y === nodesToTest[0].y){
-                    if(item.wall === false){
-                        if((nodesToTest[0].localD + 1) < item.localD){
-                            item.localD = nodesToTest[0].localD + 1;
-                            item.globalD = item.localD + item.heuristicD;
-                            item.parentNode = nodesToTest[0].x + "-" + nodesToTest[0].y;
-                        }
-        
-                        if(item.end === false && item.visited === false){
-                            nodesToTest.push(item)
-                        }     
-                        if(item.end === true){return}               
-               
-                    }
-                    
-                }
-                if(item.x === nodesToTest[0].x  && item.y === nodesToTest[0].y + 1){
-                    if(item.wall === false){
-                        if((nodesToTest[0].localD + 1) < item.localD){
-                            item.localD = nodesToTest[0].localD + 1;
-                            item.globalD = item.localD + item.heuristicD;
-                            item.parentNode = nodesToTest[0].x + "-" + nodesToTest[0].y;
-                        }
-        
-                        if(item.end === false && item.visited === false){
-                            nodesToTest.push(item)
-                        }
-                        if(item.end === true){return}               
-        
+
+                        } 
+                        if(item.end){
+                            return
+                        }               
                     }
                 }
+
             }
         
             nodesToTest[0].visited = true;
@@ -105,35 +69,34 @@ const aStar = async(arr, setNodes) => {
                     return a.globalD - b.globalD
                 }
             })
-        
-            setNodes([...arr])
-            }
-    }
-
-    aStartActivate();
-
-    for(const item of arr){
-        if(item.end === true){
-            shortestPath.push(item.parentNode)
         }
+
     }
-    const extractShortestpath = () =>{
+
+    const extractShortestpath = async() =>{
+        for(const item of arr){
+            if(item.end === true){
+                shortestPath.push(item.parentNode)
+            }
+        }
         while (shortestPath){
+            let lastParent = shortestPath[shortestPath.length - 1];
             for(const item of arr){
-                if(shortestPath[shortestPath.length - 1] === startNode.x + "-"+ startNode.y ){return}
-                if((item.x + "-" + item.y) === shortestPath[shortestPath.length - 1]){
+                if(lastParent === startNode.x + "-"+ startNode.y ){
+                    return
+                }
+                if((item.x + "-" + item.y) === lastParent){
                    item.closestNode = true;
-                    shortestPath.push(item.parentNode)
+                   setNodes([...arr])
+                   await sleep(25)
+                   shortestPath.push(item.parentNode)
                 }
             }
         }
     }
 
-    extractShortestpath()
-    setNodes([...arr])
-
-    console.log(shortestPath)
-
+    aStartActivate();
+    extractShortestpath();
 
     // Start from startNode
     // add this to the nodeToTest array

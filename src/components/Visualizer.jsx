@@ -48,16 +48,42 @@ align-items: center;
     }
     .visited{
         background-color:red;
-        animation-name: example;
-        animation-duration: 0.15s;
+
+        animation-name: visitedPath;
+        animation-duration: 2s;
     }
     .closest{
         background-color:yellow;
+        animation-name: shortPath;
+        animation-duration: 1s;
 
     }
     @keyframes example {
         from {transform: scale(0.4)}
         to {transform: scale(1.3)}
+    }
+    @keyframes visitedPath {
+        from {
+            transform: scale(0.3);
+            border-radius: 50%;
+            background-color: green;
+            }
+        to {
+            transform: scale(1);
+            border-radius: 0%;
+            background-color:red;
+
+            }
+    }
+    @keyframes shortPath {
+        from {
+            transform: scale(0.3);
+            border-radius: 50%
+            }
+        to {
+            transform: scale(1);
+            border-radius: 0%
+            }
     }
     }
 `
@@ -77,10 +103,9 @@ const Visualizer = ({ nodes, setNodes}) => {
                 nodes.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
-                        console.log(node)
                     }
                 })
-            }
+            } 
         }
     }
     const handleClick = (e) => {
@@ -120,10 +145,9 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN = "node end"
                     } else if(node.wall === true) {
                         cN = "node"
-                    }else if(node.closestNode === true){
+                    } else if(node.closestNode === true){
                         cN= "node closest"
-                    } 
-                    else if(node.visited === true){
+                    } else if(node.visited === true){
                         cN = "node visited"
                     }  else {
                         cN= "node"
