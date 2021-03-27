@@ -51,6 +51,10 @@ align-items: center;
         animation-name: example;
         animation-duration: 0.15s;
     }
+    .closest{
+        background-color:yellow;
+
+    }
     @keyframes example {
         from {transform: scale(0.4)}
         to {transform: scale(1.3)}
@@ -116,9 +120,12 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN = "node end"
                     } else if(node.wall === true) {
                         cN = "node"
-                    } else if(node.visited === true){
+                    }else if(node.closestNode === true){
+                        cN= "node closest"
+                    } 
+                    else if(node.visited === true){
                         cN = "node visited"
-                    } else {
+                    }  else {
                         cN= "node"
                     }
                   
