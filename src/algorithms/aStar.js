@@ -30,30 +30,28 @@ const aStar = async(arr, setNodes) => {
 
     const aStartActivate = async() => {
 
-        const updateNode = (node1, node2)=>{
+        const updateNode = async(node1, node2)=>{
             node1.localD = node2.localD + 1;
             node1.globalD = node1.localD + node1.heuristicD;
             node1.parentNode = node2.x + "-" + node2.y;
         }
-
         while(nodesToTest){
             
             for(const item of arr){
 
-                let left = item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y;
-                let right = item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y;
-                let up = item.x === nodesToTest[0].x && item.y === nodesToTest[0].y - 1;
-                let down = item.x === nodesToTest[0].x && item.y === nodesToTest[0].y + 1;
+                let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
+                let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
+                let up =( item.x === nodesToTest[0].x && item.y === nodesToTest[0].y - 1);
+                let down = (item.x === nodesToTest[0].x && item.y === nodesToTest[0].y + 1);
 
                 if(!item.wall){
                     if(left || right || up || down){
                         if((nodesToTest[0].localD + 1) < item.localD){
                             updateNode(item,nodesToTest[0])
+                            if(!item.end && !item.visited){
+                                nodesToTest.push(item)
+                           } 
                         }
-                        if(!item.end && !item.visited){
-                            nodesToTest.push(item)
-
-                        } 
                         if(item.end){
                             return
                         }               
@@ -63,7 +61,14 @@ const aStar = async(arr, setNodes) => {
             }
         
             nodesToTest[0].visited = true;
+
+            setNodes([...arr])
             nodesToTest.shift();
+            console.log(nodesToTest.length)
+            console.log(nodesToTest)
+
+            if(nodesToTest.length > 200){
+                break};
             nodesToTest.sort((a,b)=>{
                 if(a.heuristicD < b.heuristicD){
                     return a.globalD - b.globalD
@@ -87,8 +92,8 @@ const aStar = async(arr, setNodes) => {
                 }
                 if((item.x + "-" + item.y) === lastParent){
                    item.closestNode = true;
-                   setNodes([...arr])
-                   await sleep(25)
+                setNodes([...arr])
+                await sleep(25)
                    shortestPath.push(item.parentNode)
                 }
             }
