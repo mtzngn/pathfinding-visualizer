@@ -14,7 +14,7 @@ function App() {
   useEffect(()=>{
       for(let i = 0; i < 31 ; i++){
           for(let j = 0; j < 48; j++){
-              nodeArr.push(new Nodes(j,i, false));
+              nodeArr.push(new Nodes(j,i, false, false, Infinity, Infinity, Infinity, null, false, false, false));
           }
       }
       nodeArr.forEach((node,i)=>{
@@ -23,15 +23,8 @@ function App() {
           }
           if(node.x === 35 && node.y === 30){
               node.end = true;
-              node.targetD = 0;
           }
-          if(node.end === false){
-            node.targetD =Math.sqrt(Math.pow((node.x - 15), 2) + Math.pow((node.y - 30),2)); 
-    
-        }
       })
-
-
       setNodes([...nodeArr])
   }, [])
 
