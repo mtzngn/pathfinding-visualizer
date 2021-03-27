@@ -95,41 +95,48 @@ const Visualizer = ({ nodes, setNodes}) => {
     const handleMouseOver = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
         let nodeClass = e.target.attributes[0].value;
+        let tempArr = [...nodes];
 
         if(clicked) {
             
             if(!(nodeClass === "node start" || nodeClass === "node end")){
                 e.target.attributes[0].value = "node clicked";
-                nodes.forEach((node,i)=>{
+                tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
                     }
                 })
+                setNodes([...tempArr])
             } 
         }
     }
     const handleClick = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
         let nodeClass = e.target.attributes[0].value;
+        let tempArr = [...nodes];
+
 
         if(!(nodeClass === "node start" || nodeClass === "node end")){
             if(nodeClass === "node clicked"){
                 e.target.attributes[0].value = "node"
-                nodes.forEach((node,i)=>{
+                tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = false;
                     }
                 })
 
+
             } else {
 
                 e.target.attributes[0].value = "node clicked";
-                nodes.forEach((node,i)=>{
+                tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
                     }
                 })
             }
+            setNodes([...tempArr])
+
         } 
     }
 
