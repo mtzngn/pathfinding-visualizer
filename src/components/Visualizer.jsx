@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Nodes from "./Nodes";
 import arrowImg from "../assets/arrow-50.png";
 import targetImg from "../assets/target-50.png";
-import aStart from "../algorithms/aStar"
 
 const StyledContainer = styled.div`
 width: 100%;
@@ -33,26 +31,21 @@ align-items: center;
         border: 1px solid #03506f;
 
     }
-    .start{
+    .start, .end{
         background-position: center;
         background-repeat: no-repeat;
         background-size:cover;
-        background-image: url(${arrowImg});
         animation-name: example;
-        animation-duration: 0.15s;
-
+        animation-duration: 0.5s;
+    }
+    .start{
+        background-image: url(${arrowImg});
     }
     .end{
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size:cover;
         background-image: url(${targetImg});
-        animation-name: example;
-        animation-duration: 0.15s;
     }
     .visited{
         background-color:red;
-
         animation-name: visitedPath;
         animation-duration: 2s;
     }
@@ -60,7 +53,6 @@ align-items: center;
         background-color:yellow;
         animation-name: shortPath;
         animation-duration: 1s;
-
     }
     @keyframes example {
         from {transform: scale(0.4)}
@@ -71,13 +63,12 @@ align-items: center;
             transform: scale(0.3);
             border-radius: 50%;
             background-color: green;
-            }
+        }
         to {
             transform: scale(1);
             border-radius: 0%;
             background-color:red;
-
-            }
+        }
     }
     @keyframes shortPath {
         from {
@@ -87,9 +78,9 @@ align-items: center;
         to {
             transform: scale(1);
             border-radius: 0%
-            }
+        }
     }
-    }
+}
 `
 
 const Visualizer = ({ nodes, setNodes}) => {
@@ -119,7 +110,6 @@ const Visualizer = ({ nodes, setNodes}) => {
         let nodeClass = e.target.attributes[0].value;
         let tempArr = [...nodes];
 
-
         if(!(nodeClass === "node start" || nodeClass === "node end")){
             if(nodeClass === "node clicked"){
                 tempArr.forEach((node,i)=>{
@@ -135,7 +125,6 @@ const Visualizer = ({ nodes, setNodes}) => {
                 })
             }
             setNodes([...tempArr])
-
         } 
     }
 
@@ -158,7 +147,6 @@ const Visualizer = ({ nodes, setNodes}) => {
             setMoveEnd(true)
         } else {
             setClicked(true)
-
         }
         setNodes([...tempArr])
 
@@ -166,7 +154,6 @@ const Visualizer = ({ nodes, setNodes}) => {
     const handleMouseUp = (e) => {
         let tempArr = [...nodes];
         let nodeId = e.target.attributes.id.value.split("-");
-
 
         if(moveStart){
             e.target.attributes[0].value = "node start"
@@ -188,10 +175,7 @@ const Visualizer = ({ nodes, setNodes}) => {
             setClicked(false)
         }
         setNodes([...tempArr])
-
     }
- 
- 
 
     return(
         <StyledContainer clicked={clicked}>
@@ -212,7 +196,6 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN= "node"
                     }
                   
-
                     return(
                     <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 
