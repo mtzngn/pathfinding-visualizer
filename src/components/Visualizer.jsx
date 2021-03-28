@@ -90,6 +90,8 @@ align-items: center;
 
 const Visualizer = ({ nodes, setNodes}) => {
     const [clicked, setClicked] = useState(false);
+    const [moveStart, setMoveStart] = useState(false);
+    const [moveEnd, setMoveEnd] = useState(false);
 
 
     const handleMouseOver = (e) => {
@@ -140,6 +142,61 @@ const Visualizer = ({ nodes, setNodes}) => {
         } 
     }
 
+    const handleMouseDown = (e) => {
+        let tempArr = [...nodes];
+
+        if(e.target.attributes[0].value == "node start"){
+            e.target.attributes[0].value = "node"
+            tempArr.forEach((item)=>{
+                if(item.start === true){
+                    item.start = false
+                }
+            })
+            setMoveStart(true)
+        } else if(e.target.attributes[0].value == "node end"){
+            e.target.attributes[0].value = "node"
+            tempArr.forEach((item)=>{
+                if(item.end === true){
+                    item.end = false
+                }
+            })
+            setMoveEnd(true)
+        } else {
+            setClicked(true)
+
+        }
+        setNodes([...tempArr])
+
+    }
+    const handleMouseUp = (e) => {
+        let tempArr = [...nodes];
+        let nodeId = e.target.attributes.id.value.split("-");
+
+
+        if(moveStart){
+            e.target.attributes[0].value = "node start"
+            setMoveStart(false)
+            tempArr.forEach((item)=>{
+                if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
+                    item.start = true;
+                }
+            })
+        } else if(moveEnd) {
+            e.target.attributes[0].value = "node end"
+            setMoveEnd(false)
+            tempArr.forEach((item)=>{
+                if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
+                    item.end = true;
+                }
+            })
+        } else {
+            setClicked(false)
+        }
+        setNodes([...tempArr])
+
+    }
+ 
+ 
 
     return(
         <StyledContainer clicked={clicked}>
@@ -164,8 +221,8 @@ const Visualizer = ({ nodes, setNodes}) => {
                     return(
                     <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 
-                    onMouseDown={()=> setClicked(true)} 
-                    onMouseUp={()=>  setClicked(false)} 
+                    onMouseDown={handleMouseDown} 
+                    onMouseUp={handleMouseUp} 
                     onMouseOver={handleMouseOver} 
                     clicked={clicked}
                     onClick={handleClick}></div>         
