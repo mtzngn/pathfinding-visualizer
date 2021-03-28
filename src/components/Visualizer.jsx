@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Nodes from "./Nodes";
 import arrowImg from "../assets/arrow-50.png";
 import targetImg from "../assets/target-50.png";
-import aStart from "../algorithms/aStar"
 
 const StyledContainer = styled.div`
 width: 100%;
@@ -33,22 +31,21 @@ align-items: center;
         border: 1px solid #03506f;
 
     }
-    .start{
+    .start, .end{
         background-position: center;
         background-repeat: no-repeat;
         background-size:cover;
-        background-image: url(${arrowImg}) ;
-
+        animation-name: example;
+        animation-duration: 0.5s;
+    }
+    .start{
+        background-image: url(${arrowImg});
     }
     .end{
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size:cover;
-        background-image: url(${targetImg}) ;
+        background-image: url(${targetImg});
     }
     .visited{
         background-color:red;
-
         animation-name: visitedPath;
         animation-duration: 2s;
     }
@@ -56,7 +53,6 @@ align-items: center;
         background-color:yellow;
         animation-name: shortPath;
         animation-duration: 1s;
-
     }
     @keyframes example {
         from {transform: scale(0.4)}
@@ -67,13 +63,12 @@ align-items: center;
             transform: scale(0.3);
             border-radius: 50%;
             background-color: green;
-            }
+        }
         to {
             transform: scale(1);
             border-radius: 0%;
             background-color:red;
-
-            }
+        }
     }
     @keyframes shortPath {
         from {
@@ -83,16 +78,15 @@ align-items: center;
         to {
             transform: scale(1);
             border-radius: 0%
-            }
+        }
     }
-    }
+}
 `
 
 const Visualizer = ({ nodes, setNodes}) => {
     const [clicked, setClicked] = useState(false);
     const [moveStart, setMoveStart] = useState(false);
     const [moveEnd, setMoveEnd] = useState(false);
-
 
     const handleMouseOver = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
@@ -102,7 +96,6 @@ const Visualizer = ({ nodes, setNodes}) => {
         if(clicked) {
             
             if(!(nodeClass === "node start" || nodeClass === "node end")){
-                e.target.attributes[0].value = "node clicked";
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
@@ -110,27 +103,21 @@ const Visualizer = ({ nodes, setNodes}) => {
                 })
                 setNodes([...tempArr])
             } 
-        }
+        } 
     }
     const handleClick = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
         let nodeClass = e.target.attributes[0].value;
         let tempArr = [...nodes];
 
-
         if(!(nodeClass === "node start" || nodeClass === "node end")){
             if(nodeClass === "node clicked"){
-                e.target.attributes[0].value = "node"
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = false;
                     }
                 })
-
-
             } else {
-
-                e.target.attributes[0].value = "node clicked";
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
@@ -138,7 +125,6 @@ const Visualizer = ({ nodes, setNodes}) => {
                 })
             }
             setNodes([...tempArr])
-
         } 
     }
 
@@ -146,7 +132,6 @@ const Visualizer = ({ nodes, setNodes}) => {
         let tempArr = [...nodes];
 
         if(e.target.attributes[0].value == "node start"){
-            e.target.attributes[0].value = "node"
             tempArr.forEach((item)=>{
                 if(item.start === true){
                     item.start = false
@@ -154,7 +139,6 @@ const Visualizer = ({ nodes, setNodes}) => {
             })
             setMoveStart(true)
         } else if(e.target.attributes[0].value == "node end"){
-            e.target.attributes[0].value = "node"
             tempArr.forEach((item)=>{
                 if(item.end === true){
                     item.end = false
@@ -163,7 +147,6 @@ const Visualizer = ({ nodes, setNodes}) => {
             setMoveEnd(true)
         } else {
             setClicked(true)
-
         }
         setNodes([...tempArr])
 
@@ -171,7 +154,6 @@ const Visualizer = ({ nodes, setNodes}) => {
     const handleMouseUp = (e) => {
         let tempArr = [...nodes];
         let nodeId = e.target.attributes.id.value.split("-");
-
 
         if(moveStart){
             e.target.attributes[0].value = "node start"
@@ -193,10 +175,7 @@ const Visualizer = ({ nodes, setNodes}) => {
             setClicked(false)
         }
         setNodes([...tempArr])
-
     }
- 
- 
 
     return(
         <StyledContainer clicked={clicked}>
@@ -208,7 +187,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                     } else if (node.end === true){
                         cN = "node end"
                     } else if(node.wall === true) {
-                        cN = "node"
+                        cN = "node clicked"
                     } else if(node.closestNode === true){
                         cN= "node closest"
                     } else if(node.visited === true){
@@ -217,7 +196,6 @@ const Visualizer = ({ nodes, setNodes}) => {
                         cN= "node"
                     }
                   
-
                     return(
                     <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 

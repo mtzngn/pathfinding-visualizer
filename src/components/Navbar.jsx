@@ -39,13 +39,47 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 item.wall = false;
             }
         });
-        setTimeout(()=>{
-            setNodes([...tempArr])
-
-        }, 10000)
+        setNodes([...tempArr])
 
     }
+    const handleClearPath = () => {
+        let tempArr = [...nodes]
+        tempArr.forEach((item)=>{
+            if(item.visited === true || item.closestNode === true){
+                item.visited = false;
+                item.closestNode = false;
+                item.parentNode = null;
+                item.localD = Infinity;
+                item.globalD = Infinity;
+                item.heuristic = Infinity;
+            }
+        });
+        setNodes([...tempArr])
+    }
+    const handleClearBoard = () => {
+        let tempArr = [...nodes]
+        tempArr.forEach((item)=>{
+            item.visited = false;
+            item.wall = false;
+            item.start = false;
+            item.end = false;
+            item.closestNode = false;
+            item.parentNode = null;
+            item.localD = Infinity;
+            item.globalD = Infinity;
+            item.heuristic = Infinity;
 
+        });
+        tempArr.forEach((node,i)=>{
+            if(node.x === 15 && node.y === 15){
+                node.start = true
+            }
+            if(node.x === 35 && node.y === 30){
+                node.end = true;
+            }
+        })
+        setNodes([...tempArr])
+    }
     return(
     <StyledNavbar >
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" >
@@ -64,8 +98,8 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                     </NavDropdown>
                     <Button variant="success" id="btn" onClick={handleVisualize}>Visualize{choosed}</Button>
                     <Nav.Link  onClick={handleClearWalls}href="#deets" >Clear Walls</Nav.Link>
-                    <Nav.Link href="#deets2">Clear Path</Nav.Link>
-                    <Nav.Link eventKey={2} href="#memes">Clear Board</Nav.Link>
+                    <Nav.Link onClick={handleClearPath} href="#deets2">Clear Path</Nav.Link>
+                    <Nav.Link onClick={handleClearBoard} eventKey={2} href="#memes">Clear Board</Nav.Link>
                 </Nav>
 
                 </Navbar.Collapse>
