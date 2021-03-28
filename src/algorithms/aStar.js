@@ -66,7 +66,7 @@ const aStar = async(nodes, setNodes) => {
             nodesToTest[0].visited = true;
             nodesToTest.shift();
 
-            nodesToTest.sort((a,b)=> a.heuristicD - b.heuristicD   )
+            nodesToTest.sort((a,b)=> a.heuristicD - b.heuristicD)
 
         }
 
