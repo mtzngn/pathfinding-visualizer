@@ -85,7 +85,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
     return(
     <StyledNavbar >
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" >
-            <Navbar.Brand href="#home">Pathfindir Visualizer</Navbar.Brand>
+            <Navbar.Brand href="#home">Pathfinder Visualizer</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />             
             <Navbar.Collapse id="responsive-navbar-nav">            
                 <Nav className="justify-content-between" style={{ flex: 1}}>
