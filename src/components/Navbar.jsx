@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
 import aStar from "../algorithms/aStar"
+import dijkstra from "../algorithms/dijkstra"
 
 const StyledNavbar = styled.div`
 width: 100%;
@@ -11,7 +12,7 @@ height: fit-content;
 
 const NavbarComponenet = ({ nodes, setNodes }) => {
     const [aStarSearch, setAStarSearch] = useState("aStarSearch");
-    const [dijkstra, setDijkstra] =useState("dijkstras")
+    const [dijkstras, setDijkstras] =useState("dijkstras")
     const [currentSelection, setCurrentSelection] = useState("");
     const [choosed, setChoosed] = useState("")
 
@@ -30,7 +31,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
         if(currentSelection == "aStarSearch"){
             aStar(nodes, setNodes)
         } else if(currentSelection == "dijkstras"){
-            console.log("call dijkstra's func here")
+            dijkstra(nodes, setNodes)
         }
     }
     const handleClearWalls = () => {
@@ -90,7 +91,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 <Nav className="justify-content-between" style={{ flex: 1}}>
                     <NavDropdown title="Algorithms" id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleAStarSearch} value={aStarSearch} href="#action/3.1">A<sup>*</sup> Search</NavDropdown.Item>
-                        <NavDropdown.Item onClick={handleDijkstra} value={dijkstra}href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleDijkstra} value={dijkstras}href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

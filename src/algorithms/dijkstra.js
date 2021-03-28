@@ -2,7 +2,7 @@ const sleep = async(ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-const aStar = async(nodes, setNodes) => {
+const dijkstra = async(nodes, setNodes) => {
     let endPoint;
     let tempArr = [...nodes];
     let nodesToTest = [];
@@ -30,8 +30,7 @@ const aStar = async(nodes, setNodes) => {
         }
     }
 
-
-    const aStartActivate = async() => {
+    const dijkstraActivate = async() => {
 
         const updateNode = async(node1, node2)=>{
             node1.localD = node2.localD + 1;
@@ -57,17 +56,13 @@ const aStar = async(nodes, setNodes) => {
                         }
                         if(item.end === true){
                             shortestPathFound = true;
+                            
                         }               
                     }
                 }
-                
-
             }
             nodesToTest[0].visited = true;
             nodesToTest.shift();
-
-            nodesToTest.sort((a,b)=> a.heuristicD - b.heuristicD   )
-
         }
 
     }
@@ -94,22 +89,9 @@ const aStar = async(nodes, setNodes) => {
         }
     }
 
-    aStartActivate();
+    dijkstraActivate();
     extractShortestpath();
-
-    // Start from startNode
-    // add this to the nodeToTest array
-    // localD = 0, globalD = heuristicD + localD
-//check neighboor of starting node 
-//continue if neighboor is NOT WALL.
-//add neighboor node to note to test array
-//update the node if(locaD of startingNode + distance between nodes < localD of neighboor)
-    //add to neighboor the startingNode as parent
-    //update the neighboor's localD and globalD
-//once finished with neighboors of starting point, mark it as visited and remove from nodeToTest array
-//sort the array with the lowest global distance value
-//if endnode discovered it doesnt go in to nodeToTest array
 
 }
 
-export default aStar;
+export default dijkstra;
