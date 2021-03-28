@@ -8,6 +8,7 @@ const aStar = async(nodes, setNodes) => {
     let nodesToTest = [];
     let shortestPath = [];
     let startNode;
+    let shortestPathFound = false;
 
     tempArr.forEach((item,i)=>{
         if(item.end === true){
@@ -18,7 +19,7 @@ const aStar = async(nodes, setNodes) => {
 
     for(const item of tempArr){
         if(!item.end){
-            item.heuristicD = Math.sqrt(Math.pow((endPoint[0] - item.x), 2) + Math.pow((endPoint[1] - item.y),2)); 
+            item.heuristicD = Math.sqrt(Math.pow((endPoint[0] - item.x)) + Math.pow((endPoint[1] - item.y),2)); 
             setNodes([...tempArr])
         }
         if(item.start){
@@ -37,16 +38,15 @@ const aStar = async(nodes, setNodes) => {
             node1.globalD = node1.localD + node1.heuristicD;
             node1.parentNode = node2.x + "-" + node2.y;
         }
-        while(nodesToTest){
-            
-            for(const item of tempArr){
+        while(!shortestPathFound){
 
+            for(const item of tempArr){
                 let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
                 let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
                 let up =( item.x === nodesToTest[0].x && item.y === nodesToTest[0].y - 1);
                 let down = (item.x === nodesToTest[0].x && item.y === nodesToTest[0].y + 1);
 
-                if(!item.wall){
+                if(item.wall === false){
                     if(left || right || up || down){
                         if((nodesToTest[0].localD + 1) < item.localD){
                             updateNode(item,nodesToTest[0])
@@ -55,22 +55,25 @@ const aStar = async(nodes, setNodes) => {
                                 setNodes([...tempArr])
                            } 
                         }
-                        if(item.end){
-                            return
+                        if(item.end === true){
+                            shortestPathFound = true;
+                            
                         }               
                     }
                 }
+                
 
             }
-        
             nodesToTest[0].visited = true;
             nodesToTest.shift();
 
-            nodesToTest.sort((a,b)=>{
-                if(a.heuristicD < b.heuristicD){
-                    return a.globalD - b.globalD
-                }
-            })
+            // djakstra => nodesToTest.sort((a,b)=>a.globalD - b.globalD)
+            // nodesToTest.sort((a,b)=>{
+            //     if(a.globalD > b.globalD){
+            //         return a.globalD - b.globalD
+            //     }
+            // }
+            // )
         }
 
     }

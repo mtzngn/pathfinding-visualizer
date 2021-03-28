@@ -25,6 +25,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
     }
 
     const handleVisualize= () =>{
+        clearPath();
         !currentSelection && alert("Please Pick an Algorithm")
         if(currentSelection == "aStarSearch"){
             aStar(nodes, setNodes)
@@ -42,7 +43,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
         setNodes([...tempArr])
 
     }
-    const handleClearPath = () => {
+    const clearPath = () => {
         let tempArr = [...nodes]
         tempArr.forEach((item)=>{
             if(item.visited === true || item.closestNode === true){
@@ -54,21 +55,15 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 item.heuristic = Infinity;
             }
         });
-        setNodes([...tempArr])
+        setNodes([...tempArr]);
     }
-    const handleClearBoard = () => {
+    const clearBoard = () => {
+        clearPath();
         let tempArr = [...nodes]
         tempArr.forEach((item)=>{
-            item.visited = false;
             item.wall = false;
             item.start = false;
             item.end = false;
-            item.closestNode = false;
-            item.parentNode = null;
-            item.localD = Infinity;
-            item.globalD = Infinity;
-            item.heuristic = Infinity;
-
         });
         tempArr.forEach((node,i)=>{
             if(node.x === 15 && node.y === 15){
@@ -79,6 +74,12 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
             }
         })
         setNodes([...tempArr])
+    }
+    const handleClearPath = () => {
+        clearPath();
+    }
+    const handleClearBoard = () => {
+        clearBoard();
     }
     return(
     <StyledNavbar >
