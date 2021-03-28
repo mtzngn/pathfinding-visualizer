@@ -39,10 +39,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 item.wall = false;
             }
         });
-        setTimeout(()=>{
-            setNodes([...tempArr])
-
-        }, 10000)
+        setNodes([...tempArr])
 
     }
 

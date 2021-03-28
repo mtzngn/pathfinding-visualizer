@@ -37,14 +37,18 @@ align-items: center;
         background-position: center;
         background-repeat: no-repeat;
         background-size:cover;
-        background-image: url(${arrowImg}) ;
+        background-image: url(${arrowImg});
+        animation-name: example;
+        animation-duration: 0.15s;
 
     }
     .end{
         background-position: center;
         background-repeat: no-repeat;
         background-size:cover;
-        background-image: url(${targetImg}) ;
+        background-image: url(${targetImg});
+        animation-name: example;
+        animation-duration: 0.15s;
     }
     .visited{
         background-color:red;
@@ -93,7 +97,6 @@ const Visualizer = ({ nodes, setNodes}) => {
     const [moveStart, setMoveStart] = useState(false);
     const [moveEnd, setMoveEnd] = useState(false);
 
-
     const handleMouseOver = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
         let nodeClass = e.target.attributes[0].value;
@@ -102,7 +105,6 @@ const Visualizer = ({ nodes, setNodes}) => {
         if(clicked) {
             
             if(!(nodeClass === "node start" || nodeClass === "node end")){
-                e.target.attributes[0].value = "node clicked";
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
@@ -110,7 +112,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                 })
                 setNodes([...tempArr])
             } 
-        }
+        } 
     }
     const handleClick = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
@@ -120,17 +122,12 @@ const Visualizer = ({ nodes, setNodes}) => {
 
         if(!(nodeClass === "node start" || nodeClass === "node end")){
             if(nodeClass === "node clicked"){
-                e.target.attributes[0].value = "node"
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = false;
                     }
                 })
-
-
             } else {
-
-                e.target.attributes[0].value = "node clicked";
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = true;
@@ -146,7 +143,6 @@ const Visualizer = ({ nodes, setNodes}) => {
         let tempArr = [...nodes];
 
         if(e.target.attributes[0].value == "node start"){
-            e.target.attributes[0].value = "node"
             tempArr.forEach((item)=>{
                 if(item.start === true){
                     item.start = false
@@ -154,7 +150,6 @@ const Visualizer = ({ nodes, setNodes}) => {
             })
             setMoveStart(true)
         } else if(e.target.attributes[0].value == "node end"){
-            e.target.attributes[0].value = "node"
             tempArr.forEach((item)=>{
                 if(item.end === true){
                     item.end = false
@@ -208,7 +203,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                     } else if (node.end === true){
                         cN = "node end"
                     } else if(node.wall === true) {
-                        cN = "node"
+                        cN = "node clicked"
                     } else if(node.closestNode === true){
                         cN= "node closest"
                     } else if(node.visited === true){
