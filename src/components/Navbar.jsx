@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
 import aStar from "../algorithms/aStar"
@@ -32,18 +32,17 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
             console.log("call dijkstra's func here")
         }
     }
-
     const handleClearWalls = () => {
-        let tempArr = [...nodes];
-        tempArr.forEach((node)=>{
-            if(node.wall === true){
-                node.wall = false;
-                console.log("wall found")
-                setNodes([...tempArr])
-
+        let tempArr = [...nodes]
+        tempArr.forEach((item)=>{
+            if(item.wall === true){
+                item.wall = false;
             }
-        })
+        });
+        setTimeout(()=>{
+            setNodes([...tempArr])
 
+        }, 10000)
 
     }
 

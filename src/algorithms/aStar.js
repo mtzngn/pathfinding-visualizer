@@ -2,22 +2,24 @@ const sleep = async(ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-const aStar = async(arr, setNodes) => {
+const aStar = async(nodes, setNodes) => {
     let endPoint;
+    let tempArr = [...nodes];
     let nodesToTest = [];
     let shortestPath = [];
     let startNode;
 
-    arr.forEach((item,i)=>{
+    tempArr.forEach((item,i)=>{
         if(item.end === true){
             endPoint = [item.x, item.y];
         }
     });
+    setNodes([...tempArr])
 
-    for(const item of arr){
+    for(const item of tempArr){
         if(!item.end){
             item.heuristicD = Math.sqrt(Math.pow((endPoint[0] - item.x), 2) + Math.pow((endPoint[1] - item.y),2)); 
-            setNodes([...arr])
+            setNodes([...tempArr])
         }
         if(item.start){
             item.localD = 0;
@@ -37,7 +39,7 @@ const aStar = async(arr, setNodes) => {
         }
         while(nodesToTest){
             
-            for(const item of arr){
+            for(const item of tempArr){
 
                 let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
                 let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
@@ -50,6 +52,7 @@ const aStar = async(arr, setNodes) => {
                             updateNode(item,nodesToTest[0])
                             if(!item.end && !item.visited){
                                 nodesToTest.push(item)
+                                setNodes([...tempArr])
                            } 
                         }
                         if(item.end){
@@ -61,14 +64,8 @@ const aStar = async(arr, setNodes) => {
             }
         
             nodesToTest[0].visited = true;
-
-            setNodes([...arr])
             nodesToTest.shift();
-            console.log(nodesToTest.length)
-            console.log(nodesToTest)
 
-            if(nodesToTest.length > 200){
-                break};
             nodesToTest.sort((a,b)=>{
                 if(a.heuristicD < b.heuristicD){
                     return a.globalD - b.globalD
@@ -79,20 +76,20 @@ const aStar = async(arr, setNodes) => {
     }
 
     const extractShortestpath = async() =>{
-        for(const item of arr){
+        for(const item of tempArr){
             if(item.end === true){
                 shortestPath.push(item.parentNode)
             }
         }
         while (shortestPath){
             let lastParent = shortestPath[shortestPath.length - 1];
-            for(const item of arr){
+            for(const item of tempArr){
                 if(lastParent === startNode.x + "-"+ startNode.y ){
                     return
                 }
                 if((item.x + "-" + item.y) === lastParent){
                    item.closestNode = true;
-                setNodes([...arr])
+                setNodes([...tempArr])
                 await sleep(25)
                    shortestPath.push(item.parentNode)
                 }
