@@ -53,6 +53,7 @@ align-items: center;
         background-color:yellow;
         animation-name: shortPath;
         animation-duration: 1s;
+        border: none;
     }
     @keyframes example {
         from {transform: scale(0.4)}
