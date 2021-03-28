@@ -24,7 +24,7 @@ align-items: center;
         transition: all 0s ease-in 0s;
         }
 
-    .clicked{
+    .wall{
         background-color: #03506f;
         animation-name: example;
         animation-duration: 0.15s;
@@ -45,12 +45,13 @@ align-items: center;
         background-image: url(${targetImg});
     }
     .visited{
-        background-color:red;
+        background-color:rgba(17, 105, 142,0.4);
         animation-name: visitedPath;
         animation-duration: 2s;
+        border-color: rgba(255, 255, 255,0.4);
     }
     .closest{
-        background-color:yellow;
+        background-color:rgb(247, 234, 0);
         animation-name: shortPath;
         animation-duration: 1s;
         border: none;
@@ -61,14 +62,14 @@ align-items: center;
     }
     @keyframes visitedPath {
         from {
-            transform: scale(0.3);
+            transform: scale(0.5);
             border-radius: 50%;
-            background-color: green;
+            background-color: #16c79a;
         }
         to {
             transform: scale(1);
             border-radius: 0%;
-            background-color:red;
+            background-color:rgba(17, 105, 142,0.4);
         }
     }
     @keyframes shortPath {
@@ -112,7 +113,7 @@ const Visualizer = ({ nodes, setNodes}) => {
         let tempArr = [...nodes];
 
         if(!(nodeClass === "node start" || nodeClass === "node end")){
-            if(nodeClass === "node clicked"){
+            if(nodeClass === "node wall"){
                 tempArr.forEach((node,i)=>{
                     if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
                         node.wall = false;
@@ -132,14 +133,14 @@ const Visualizer = ({ nodes, setNodes}) => {
     const handleMouseDown = (e) => {
         let tempArr = [...nodes];
 
-        if(e.target.attributes[0].value == "node start"){
+        if(e.target.attributes[0].value === "node start"){
             tempArr.forEach((item)=>{
                 if(item.start === true){
                     item.start = false
                 }
             })
             setMoveStart(true)
-        } else if(e.target.attributes[0].value == "node end"){
+        } else if(e.target.attributes[0].value === "node end"){
             tempArr.forEach((item)=>{
                 if(item.end === true){
                     item.end = false
@@ -162,6 +163,7 @@ const Visualizer = ({ nodes, setNodes}) => {
             tempArr.forEach((item)=>{
                 if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
                     item.start = true;
+                    item.wall = false;
                 }
             })
         } else if(moveEnd) {
@@ -170,12 +172,49 @@ const Visualizer = ({ nodes, setNodes}) => {
             tempArr.forEach((item)=>{
                 if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
                     item.end = true;
+                    item.wall = false;
+
                 }
             })
         } else {
             setClicked(false)
         }
         setNodes([...tempArr])
+    }
+    const handleOnMouseEnter = (e) =>{
+        let targetValue = e.target.attributes[0].value
+
+        if(moveStart){
+            if(targetValue === "node wall"){
+                e.target.attributes[0].value = "node start oldWall"
+            } else {
+                e.target.attributes[0].value = "node start"
+            }
+        }
+        if(moveEnd){
+            if(targetValue === "node wall"){
+                e.target.attributes[0].value = "node end oldWall"
+            } else {
+                e.target.attributes[0].value = "node end"
+            }
+        }
+    }
+    const handleOnMouseLeave = (e) => {
+        let targetValue = e.target.attributes[0].value
+        if(moveStart){
+            if(targetValue === "node start"){
+                e.target.attributes[0].value = "node"
+            } else if(targetValue === "node start oldWall"){
+                e.target.attributes[0].value = "node wall"
+            }
+        }
+        if(moveEnd){
+            if(targetValue === "node end"){
+                e.target.attributes[0].value = "node"
+            } else if(targetValue === "node end oldWall"){
+                e.target.attributes[0].value = "node wall"
+            }
+        }
     }
 
     return(
@@ -188,7 +227,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                     } else if (node.end === true){
                         cN = "node end"
                     } else if(node.wall === true) {
-                        cN = "node clicked"
+                        cN = "node wall"
                     } else if(node.closestNode === true){
                         cN= "node closest"
                     } else if(node.visited === true){
@@ -203,6 +242,8 @@ const Visualizer = ({ nodes, setNodes}) => {
                     onMouseDown={handleMouseDown} 
                     onMouseUp={handleMouseUp} 
                     onMouseOver={handleMouseOver} 
+                    onMouseEnter={handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
                     clicked={clicked}
                     onClick={handleClick}></div>         
                     )
