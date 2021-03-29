@@ -26,11 +26,11 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
     }
 
     const handleVisualize= () =>{
+        !currentSelection && alert("Please Pick an Algorithm");
         clearPath();
-        !currentSelection && alert("Please Pick an Algorithm")
-        if(currentSelection == "aStarSearch"){
+        if(currentSelection === "aStarSearch"){
             aStar(nodes, setNodes)
-        } else if(currentSelection == "dijkstras"){
+        } else if(currentSelection === "dijkstras"){
             dijkstra(nodes, setNodes)
         }
     }
@@ -53,7 +53,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 item.parentNode = null;
                 item.localD = Infinity;
                 item.globalD = Infinity;
-                item.heuristic = Infinity;
+                item.heuristicD = Infinity;
             }
         });
         setNodes([...tempArr]);
