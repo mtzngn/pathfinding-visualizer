@@ -10,13 +10,14 @@ position:absolute;
 display: flex;
 justify-content:center;
 align-items: center;
-.container{
-    width: 80%;
-    height: 80%;
-}
+
 .node-wrap{
     width: 1200px;
     height: 775px;
+    @media(max-width: 1024px){
+        width: 960px;
+        height: 620px;
+    }
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -24,6 +25,10 @@ align-items: center;
     .node{
         width: 25px;
         height: 25px;
+        @media(max-width: 1024px){
+            width: 20px;
+            height: 20px;
+        }
         border: 1px solid rgba(160,160,255,0.3);
         transition: all 0s ease-in 0s;
         }
@@ -223,7 +228,6 @@ const Visualizer = ({ nodes, setNodes}) => {
 
     return(
         <StyledContainer clicked={clicked}>
-            <div className="container">
             <div className="node-wrap">
                 {nodes.map((node, i)=>{
                     let cN;
@@ -253,7 +257,6 @@ const Visualizer = ({ nodes, setNodes}) => {
                     onClick={handleClick}></div>         
                     )
                 })}
-        </div>
         </div>
         </StyledContainer>
     )
