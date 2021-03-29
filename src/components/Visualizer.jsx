@@ -10,6 +10,10 @@ position:absolute;
 display: flex;
 justify-content:center;
 align-items: center;
+.container{
+    width: 80%;
+    height: 80%;
+}
 .node-wrap{
     width: 1200px;
     height: 775px;
@@ -219,6 +223,7 @@ const Visualizer = ({ nodes, setNodes}) => {
 
     return(
         <StyledContainer clicked={clicked}>
+            <div className="container">
             <div className="node-wrap">
                 {nodes.map((node, i)=>{
                     let cN;
@@ -248,6 +253,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                     onClick={handleClick}></div>         
                     )
                 })}
+        </div>
         </div>
         </StyledContainer>
     )
