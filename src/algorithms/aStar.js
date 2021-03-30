@@ -2,7 +2,7 @@ const sleep = async(ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-const aStar = async(nodes, setNodes) => {
+const aStar = async(nodes, setNodes, setIsRunning) => {
     let endPoint;
     let tempArr = [...nodes];
     let nodesToTest = [];
@@ -15,12 +15,10 @@ const aStar = async(nodes, setNodes) => {
             endPoint = [item.x, item.y];
         }
     });
-    setNodes([...tempArr])
 
     for(const item of tempArr){
         if(!item.end){
             item.heuristicD = Math.sqrt(Math.pow((endPoint[0] - item.x),2) + Math.pow((endPoint[1] - item.y),2)); 
-            setNodes([...tempArr])
         }
         if(item.start){
             item.localD = 0;
@@ -29,7 +27,6 @@ const aStar = async(nodes, setNodes) => {
             nodesToTest.push(item)
         }
     }
-
 
     const aStartActivate = async() => {
 
@@ -53,6 +50,7 @@ const aStar = async(nodes, setNodes) => {
                             if(!item.end && !item.visited){
                                 nodesToTest.push(item)
                                 setNodes([...tempArr])
+                                await sleep(1)
                            } 
                         }
                         if(item.end === true){
@@ -60,16 +58,11 @@ const aStar = async(nodes, setNodes) => {
                         }               
                     }
                 }
-                
-
             }
             nodesToTest[0].visited = true;
             nodesToTest.shift();
-
             nodesToTest.sort((a,b)=> a.heuristicD - b.heuristicD)
-
         }
-
     }
 
     const extractShortestpath = async() =>{
@@ -93,9 +86,9 @@ const aStar = async(nodes, setNodes) => {
             }
         }
     }
-
-    aStartActivate();
-    extractShortestpath();
+    await aStartActivate();
+    await extractShortestpath();
+    await setIsRunning(false);
 
     // Start from startNode
     // add this to the nodeToTest array

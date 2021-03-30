@@ -12,9 +12,10 @@ height: fit-content;
 
 const NavbarComponenet = ({ nodes, setNodes }) => {
     const [aStarSearch, setAStarSearch] = useState("aStarSearch");
-    const [dijkstras, setDijkstras] =useState("dijkstras")
+    const [dijkstras, setDijkstras] =useState("dijkstras");
     const [currentSelection, setCurrentSelection] = useState("");
-    const [choosed, setChoosed] = useState("")
+    const [choosed, setChoosed] = useState("");
+    const [isRunning, setIsRunning] = useState(false);
 
     const handleAStarSearch = (e) => {
         setCurrentSelection(e.target.attributes[0].value)
@@ -28,10 +29,11 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
     const handleVisualize= () =>{
         !currentSelection && alert("Please Pick an Algorithm");
         clearPath();
+        setIsRunning(true)
         if(currentSelection === "aStarSearch"){
-            aStar(nodes, setNodes)
+            aStar(nodes, setNodes, setIsRunning)
         } else if(currentSelection === "dijkstras"){
-            dijkstra(nodes, setNodes)
+            dijkstra(nodes, setNodes, setIsRunning)
         }
     }
     const handleClearWalls = () => {
@@ -98,10 +100,10 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                     </NavDropdown>
-                    <Button variant="success" id="btn" onClick={handleVisualize}>Visualize{choosed}</Button>
-                    <Nav.Link  onClick={handleClearWalls}href="#deets" >Clear Walls</Nav.Link>
-                    <Nav.Link onClick={handleClearPath} href="#deets2">Clear Path</Nav.Link>
-                    <Nav.Link onClick={handleClearBoard} eventKey={2} href="#memes">Clear Board</Nav.Link>
+                    <Button variant="success" id="btn" onClick={handleVisualize} disabled={isRunning}>Visualize{choosed}</Button>
+                    <Nav.Link  onClick={handleClearWalls}href="#deets" disabled={isRunning}>Clear Walls</Nav.Link>
+                    <Nav.Link onClick={handleClearPath} href="#deets2" disabled={isRunning}>Clear Path</Nav.Link>
+                    <Nav.Link onClick={handleClearBoard} eventKey={2} href="#memes" disabled={isRunning}>Clear Board</Nav.Link>
                 </Nav>
 
                 </Navbar.Collapse>
