@@ -5,7 +5,7 @@ import targetImg from "../assets/target-50.png";
 
 const StyledContainer = styled.div`
 width: 100%;
-height : 88vh;
+height : 82vh;
 position:absolute;
 display: flex;
 justify-content:center;

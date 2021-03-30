@@ -26,15 +26,22 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
         setChoosed(" Dijkstra's")
     }
 
-    const handleVisualize= () =>{
-        !currentSelection && alert("Please Pick an Algorithm");
-        clearPath();
+    const handleVisualize= async() =>{
+        if(!currentSelection){
+            alert("Please Pick an Algorithm");
+            return;
+        }
+        console.log(nodes)
+        await clearPath();
+
         setIsRunning(true)
         if(currentSelection === "aStarSearch"){
             aStar(nodes, setNodes, setIsRunning)
         } else if(currentSelection === "dijkstras"){
             dijkstra(nodes, setNodes, setIsRunning)
         }
+        //if astart chossen and run than after djkstra it runs astar, needs to be fixed.
+        //clear path wont updating the state
     }
     const handleClearWalls = () => {
         let tempArr = [...nodes]
@@ -46,7 +53,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
         setNodes([...tempArr])
 
     }
-    const clearPath = () => {
+    const clearPath = async() => {
         let tempArr = [...nodes]
         tempArr.forEach((item)=>{
             if(item.visited === true || item.closestNode === true){
@@ -58,7 +65,9 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                 item.heuristicD = Infinity;
             }
         });
-        setNodes([...tempArr]);
+        await setNodes([...tempArr]);
+        console.log(nodes)
+
     }
     const clearBoard = () => {
         clearPath();
