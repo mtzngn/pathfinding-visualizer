@@ -2,7 +2,7 @@ const sleep = async(ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-const dijkstra = async(nodes, setNodes) => {
+const dijkstra = async(nodes, setNodes, setIsRunning) => {
     let endPoint;
     let tempArr = [...nodes];
     let nodesToTest = [];
@@ -91,6 +91,8 @@ const dijkstra = async(nodes, setNodes) => {
 
     await dijkstraActivate();
     await extractShortestpath();
+    await setIsRunning(false);
+
 
 }
 
