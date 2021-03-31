@@ -31,7 +31,7 @@ align-items: center;
             height: 20px;
         }
         border: 1px solid rgba(160,160,255,0.3);
-        transition: all 0s ease-in 0s;
+        transition: all 1s ease-in 0s;
         }
 
     .wall{
@@ -55,10 +55,12 @@ align-items: center;
         background-image: url(${targetImg});
     }
     .visited{
-        background-color:rgba(17, 105, 142,0.4);
+        background-color:#0eb5ed;
         animation-name: visitedPath;
-        animation-duration: 2s;
+        animation-duration: 1.3s;
         border-color: rgba(255, 255, 255,0.4);
+        animation-timing-function: ease-in-out;
+
     }
     .closest{
         background-color:rgb(247, 234, 0);
@@ -71,16 +73,23 @@ align-items: center;
         to {transform: scale(1.3)}
     }
     @keyframes visitedPath {
-        from {
+        0%{
             transform: scale(0.5);
             border-radius: 50%;
             background-color: #16c79a;
+            }
+        75%{
+            transform: scale(1.2);
+            border-radius: 10%;
+            background-color: #3ce9bd;
         }
-        to {
+        100%{
             transform: scale(1);
             border-radius: 0%;
-            background-color:rgba(17, 105, 142,0.4);
+            background-color: #0eb5ed;
         }
+
+
     }
     @keyframes shortPath {
         from {
@@ -88,7 +97,7 @@ align-items: center;
             border-radius: 50%
             }
         to {
-            transform: scale(1);
+            transform: scale(1.1);
             border-radius: 0%
         }
     }

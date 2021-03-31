@@ -28,15 +28,18 @@ const StyledIntro = styled.div`
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            height: 100%;
+            width: 100%;
+            .intro-gif{
+                width: 100%;
+            }
         }
     }
     .bottom{
         height: 20%;
         width: 100%;
     }
-    .intro-gif{
 
-    }
 
 
 `
