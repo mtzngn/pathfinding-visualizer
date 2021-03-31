@@ -51,12 +51,10 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
                                 nodesToTest.push(item)
                                 setNodes([...tempArr])
                                 await sleep(1)
-
                            } 
                         }
                         if(item.end === true){
                             shortestPathFound = true;
-                            
                         }               
                     }
                 }
@@ -64,7 +62,6 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
             nodesToTest[0].visited = true;
             nodesToTest.shift();
         }
-
     }
 
     const extractShortestpath = async() =>{
@@ -83,7 +80,7 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
                    item.closestNode = true;
                 setNodes([...tempArr])
                 await sleep(25)
-                   shortestPath.push(item.parentNode)
+                shortestPath.push(item.parentNode)
                 }
             }
         }

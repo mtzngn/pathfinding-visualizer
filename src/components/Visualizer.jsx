@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import arrowImg from "../assets/arrow-50.png";
 import targetImg from "../assets/target-50.png";
+import Intro from "./Intro";
 
 const StyledContainer = styled.div`
 width: 100%;
@@ -228,6 +229,7 @@ const Visualizer = ({ nodes, setNodes}) => {
 
     return(
         <StyledContainer clicked={clicked}>
+            <Intro/>
             <div className="node-wrap">
                 {nodes.map((node, i)=>{
                     let cN;
@@ -257,7 +259,7 @@ const Visualizer = ({ nodes, setNodes}) => {
                     onClick={handleClick}></div>         
                     )
                 })}
-        </div>
+            </div>
         </StyledContainer>
     )
 }
