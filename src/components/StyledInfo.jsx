@@ -56,7 +56,7 @@ align-items: center;}
   }
   .visited{
     border: 1px solid rgba(255, 255, 255,0.4);
-    background-color: rgba(17, 105, 142,0.4);
+    background-color: #0eb5ed;
   }
   .shortest{
     background-color: rgb(247, 234, 0);

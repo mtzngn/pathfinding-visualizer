@@ -31,7 +31,7 @@ align-items: center;
             height: 20px;
         }
         border: 1px solid rgba(160,160,255,0.3);
-        transition: all 1s ease-in 0s;
+        transition: all 0.2s ease-in 0s;
         }
 
     .wall{
@@ -76,7 +76,7 @@ align-items: center;
         0%{
             transform: scale(0.5);
             border-radius: 50%;
-            background-color: #16c79a;
+            background-color: #28527a;
             }
         75%{
             transform: scale(1.2);
@@ -92,14 +92,19 @@ align-items: center;
 
     }
     @keyframes shortPath {
-        from {
-            transform: scale(0.3);
-            border-radius: 50%
+        0%{
+            transform: scale(0.5);
+            border-radius: 50%;
             }
-        to {
-            transform: scale(1.1);
-            border-radius: 0%
+        75%{
+            transform: scale(1.2);
+            border-radius: 10%;
         }
+        100%{
+            transform: scale(1);
+            border-radius: 0%;
+        }
+
     }
 }
 `
