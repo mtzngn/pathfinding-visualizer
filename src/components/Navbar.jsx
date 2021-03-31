@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
 import aStar from "../algorithms/aStar"
@@ -88,7 +88,7 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
     }
     return(
     <StyledNavbar >
-        <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" >
+        <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
             <Navbar.Brand href="#home">Pathfinder Visualizer</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />             
             <Navbar.Collapse id="responsive-navbar-nav">            
@@ -98,9 +98,9 @@ const NavbarComponenet = ({ nodes, setNodes }) => {
                         <NavDropdown.Item onClick={handleDijkstra} value={dijkstras}href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.1">Coming Soon</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2">Coming Soon</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
                     </NavDropdown>
                     <Button variant="success" id="btn" onClick={handleVisualize} disabled={isRunning}>Visualize{choosed}</Button>
                     <Nav.Link  onClick={handleClearWalls}href="#deets" disabled={isRunning}>Clear Walls</Nav.Link>
