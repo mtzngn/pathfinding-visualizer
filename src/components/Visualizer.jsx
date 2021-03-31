@@ -110,7 +110,7 @@ align-items: flex-start;
 }
 `
 
-const Visualizer = ({ nodes, setNodes}) => {
+const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     const [clicked, setClicked] = useState(false);
     const [moveStart, setMoveStart] = useState(false);
     const [moveEnd, setMoveEnd] = useState(false);
@@ -265,13 +265,13 @@ const Visualizer = ({ nodes, setNodes}) => {
                     return(
                     <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 
-                    onMouseDown={handleMouseDown} 
-                    onMouseUp={handleMouseUp} 
-                    onMouseOver={handleMouseOver} 
-                    onMouseEnter={handleOnMouseEnter}
-                    onMouseLeave={handleOnMouseLeave}
+                    onMouseDown={!isRunning && handleMouseDown} 
+                    onMouseUp={!isRunning && handleMouseUp} 
+                    onMouseOver={!isRunning && handleMouseOver} 
+                    onMouseEnter={!isRunning && handleOnMouseEnter}
+                    onMouseLeave={!isRunning && handleOnMouseLeave}
                     clicked={clicked}
-                    onClick={handleClick}></div>         
+                    onClick={!isRunning && handleClick}></div>         
                     )
                 })}
             </div>

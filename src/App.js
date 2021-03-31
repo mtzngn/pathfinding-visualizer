@@ -10,6 +10,8 @@ import StyledInfo from "./components/StyledInfo"
 function App() {
 
   const [nodes, setNodes] = useState([]);
+  const [isRunning, setIsRunning] = useState(false);
+
   let nodeArr = []
 
   
@@ -34,9 +36,9 @@ function App() {
 
   return (
     <div className="App">
-      <NavbarComponenet nodes={nodes} setNodes={setNodes}/>
+      <NavbarComponenet nodes={nodes} setNodes={setNodes} isRunning={isRunning} setIsRunning={setIsRunning}/>
       <StyledInfo/>
-      <Visualizer nodes={nodes} setNodes={setNodes}/>
+      <Visualizer nodes={nodes} setNodes={setNodes} isRunning={isRunning} setIsRunning={setIsRunning}/>
     </div>
   );
 }
