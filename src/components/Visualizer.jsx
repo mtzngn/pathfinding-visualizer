@@ -6,7 +6,7 @@ import Intro from "./Intro";
 
 const StyledContainer = styled.div`
 width: 100%;
-height : 82vh;
+height : 85vh;
 position:absolute;
 display: flex;
 justify-content:center;
@@ -15,7 +15,7 @@ align-items: center;
 .node-wrap{
     width: 1200px;
     height: 775px;
-    @media(max-width: 1024px){
+    @media(min-width: 1024px){
         width: 960px;
         height: 620px;
     }
@@ -26,7 +26,7 @@ align-items: center;
     .node{
         width: 25px;
         height: 25px;
-        @media(max-width: 1024px){
+        @media(min-width: 1024px){
             width: 20px;
             height: 20px;
         }
