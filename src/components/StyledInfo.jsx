@@ -4,7 +4,7 @@ import arrow from "../assets/arrow-50.png"
 import end from "../assets/target-50.png"
 
 const StyledDiv = styled.div`
-height: 10vh;
+height: 7vh;
 width: 100%;
 display: flex;
 h3{
