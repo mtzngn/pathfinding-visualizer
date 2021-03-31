@@ -10,14 +10,15 @@ height : 85vh;
 position:absolute;
 display: flex;
 justify-content:center;
-align-items: center;
+align-items: flex-start;
 
 .node-wrap{
     width: 1200px;
     height: 775px;
     @media(min-width: 1024px){
         width: 960px;
-        height: 620px;
+        height: 500px;
+        transform: scale(0.9);
     }
     display:flex;
     flex-wrap: wrap;
@@ -80,7 +81,7 @@ align-items: center;
             }
         75%{
             transform: scale(1.2);
-            border-radius: 10%;
+            border-radius: 25%;
             background-color: #3ce9bd;
         }
         100%{
@@ -98,7 +99,7 @@ align-items: center;
             }
         75%{
             transform: scale(1.2);
-            border-radius: 10%;
+            border-radius: 25%;
         }
         100%{
             transform: scale(1);
