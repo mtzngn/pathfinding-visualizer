@@ -10,12 +10,11 @@ height: fit-content;
 
 `
 
-const NavbarComponenet = ({ nodes, setNodes }) => {
+const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
     const [aStarSearch, setAStarSearch] = useState("aStarSearch");
     const [dijkstras, setDijkstras] =useState("dijkstras");
     const [currentSelection, setCurrentSelection] = useState("");
     const [choosed, setChoosed] = useState("");
-    const [isRunning, setIsRunning] = useState(false);
 
     const handleAStarSearch = (e) => {
         setCurrentSelection(e.target.attributes[0].value)
