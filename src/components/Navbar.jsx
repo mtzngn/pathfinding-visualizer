@@ -94,7 +94,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                 <Nav className="justify-content-between" style={{ flex: 1}}>
                     <NavDropdown title="Algorithms" id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleAStarSearch} value={aStarSearch} href="#action/3.1">A<sup>*</sup> Search</NavDropdown.Item>
-                        <NavDropdown.Item onClick={handleDijkstra} value={dijkstras}href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleDijkstra} value={dijkstras} href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Coming Soon</NavDropdown.Item>
@@ -102,7 +102,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                         <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
                     </NavDropdown>
                     <Button variant="success" id="btn" onClick={handleVisualize} disabled={isRunning}>Visualize{choosed}</Button>
-                    <Nav.Link  onClick={handleClearWalls}href="#deets" disabled={isRunning}>Clear Walls</Nav.Link>
+                    <Nav.Link  onClick={handleClearWalls} href="#deets" disabled={isRunning}>Clear Walls</Nav.Link>
                     <Nav.Link onClick={handleClearPath} href="#deets2" disabled={isRunning}>Clear Path</Nav.Link>
                     <Nav.Link onClick={handleClearBoard} eventKey={2} href="#memes" disabled={isRunning}>Clear Board</Nav.Link>
                 </Nav>
