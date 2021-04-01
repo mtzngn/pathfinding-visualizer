@@ -265,13 +265,13 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                     return(
                     <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 
-                    onMouseDown={!isRunning && handleMouseDown} 
-                    onMouseUp={!isRunning && handleMouseUp} 
-                    onMouseOver={!isRunning && handleMouseOver} 
-                    onMouseEnter={!isRunning && handleOnMouseEnter}
-                    onMouseLeave={!isRunning && handleOnMouseLeave}
-                    clicked={clicked}
-                    onClick={!isRunning && handleClick}></div>         
+                    onMouseDown={!isRunning ? handleMouseDown : undefined} 
+                    onMouseUp={!isRunning ? handleMouseUp : undefined} 
+                    onMouseOver={!isRunning ? handleMouseOver : undefined} 
+                    onMouseEnter={!isRunning ? handleOnMouseEnter : undefined}
+                    onMouseLeave={!isRunning ? handleOnMouseLeave : undefined}
+                    clicked={clicked.toString()}
+                    onClick={!isRunning ? handleClick : undefined}></div>         
                     )
                 })}
             </div>
