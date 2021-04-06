@@ -42,6 +42,13 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
     }
     const animateDijkstra = (dijkstraResult) => {
         for(let i = 0; i < dijkstraResult[0].length; i++) {
+            
+            if(i === dijkstraResult[0].length - 1) {
+                setTimeout(()=> {
+                    animateShortestPath(dijkstraResult[1])
+                }, i * 10)
+            }
+            
             setTimeout(()=>{
                 const node = dijkstraResult[0][i];
                 document.getElementById(node.x + "-" + node.y).className = "node visited"
@@ -49,6 +56,14 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
 
         }
 
+    }
+    const animateShortestPath = (shortestPath) => {
+
+        for(let i = 0; i < shortestPath.length - 1; i++) {
+            setTimeout(()=>{
+                document.getElementById(shortestPath[i]).className= "node closest"
+            }, i * 50)
+        }
     }
     const handleClearWalls = () => {
         let tempArr = [...nodes]
