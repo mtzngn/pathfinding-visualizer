@@ -31,12 +31,12 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             return;
         }
         await clearPath();
-        setIsRunning(true)
+        setIsRunning(true);
+
         if(currentSelection === "aStarSearch"){
             aStar(nodes, setNodes, setIsRunning)
         } else if(currentSelection === "dijkstras"){
             let dijkstraResult = await dijkstra(nodes, setNodes, setIsRunning);
-            console.log(dijkstraResult)
             animateDijkstra(dijkstraResult)
         }
     }
