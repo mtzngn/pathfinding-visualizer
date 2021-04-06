@@ -1,14 +1,16 @@
-const sleep = async(ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
 const dijkstra = async(nodes, setNodes, setIsRunning) => {
+
     let endPoint;
     let tempArr = [...nodes];
     let nodesToTest = [];
+    let visitedNodes = [];
     let shortestPath = [];
     let startNode;
     let shortestPathFound = false;
+
+    const sleep = async(ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
 
     const getEndPoints  = () => {
         tempArr.forEach((item,i)=>{
@@ -17,8 +19,6 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
             }
         });
     }
-
-
 
     const calculateHeuristics = () =>{
         for(const item of tempArr){
@@ -45,7 +45,7 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
         while(!shortestPathFound){
 
             for(const item of tempArr){
-                if(item.wall === true || item.visited) continue;
+                if(item.wall || item.visited) continue;
 
                 let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
                 let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
@@ -59,18 +59,15 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
                         shortestPathFound = true
                         continue;
                         }
-                        if(shortestPathFound) {console.log("interesting")}
                         nodesToTest.push(item)
-                        setNodes([...tempArr])
-                        await sleep(1)
-                        
                     }
-            
                 }
-                
             }
-            nodesToTest[0].visited = true;
+            if(nodesToTest[0].start) {nodesToTest[0].visited = true}
+            visitedNodes.push(nodesToTest[0])
             nodesToTest.shift();
+            nodesToTest.sort((a,b)=> a.localD - b.localD)
+
         }
     }
 
@@ -78,6 +75,7 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
         for(const item of tempArr){
             if(item.end === true){
                 shortestPath.push(item.parentNode)
+                continue;
             }
         }
         while (shortestPath){
@@ -87,20 +85,19 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
                     return
                 }
                 if((item.x + "-" + item.y) === lastParent){
-                   item.closestNode = true;
-                setNodes([...tempArr])
-                await sleep(25)
-                shortestPath.push(item.parentNode)
+                    item.closestNode = true;
+                    shortestPath.push(item.parentNode)
                 }
             }
         }
     }
+
     getEndPoints();
     calculateHeuristics();
-
     await createVisitedNodes();
     await extractShortestpath();
     await setIsRunning(false);
+    return [visitedNodes, shortestPath]
 
 
 }

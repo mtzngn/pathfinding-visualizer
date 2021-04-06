@@ -35,8 +35,20 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
         if(currentSelection === "aStarSearch"){
             aStar(nodes, setNodes, setIsRunning)
         } else if(currentSelection === "dijkstras"){
-            dijkstra(nodes, setNodes, setIsRunning)
+            let dijkstraResult = await dijkstra(nodes, setNodes, setIsRunning);
+            console.log(dijkstraResult)
+            animateDijkstra(dijkstraResult)
         }
+    }
+    const animateDijkstra = (dijkstraResult) => {
+        for(let i = 0; i < dijkstraResult[0].length; i++) {
+            setTimeout(()=>{
+                const node = dijkstraResult[0][i];
+                document.getElementById(node.x + "-" + node.y).className = "node visited"
+            }, i * 10)
+
+        }
+
     }
     const handleClearWalls = () => {
         let tempArr = [...nodes]

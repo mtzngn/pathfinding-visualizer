@@ -114,6 +114,7 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     const [clicked, setClicked] = useState(false);
     const [moveStart, setMoveStart] = useState(false);
     const [moveEnd, setMoveEnd] = useState(false);
+    const [className, setClassName] = useState("node")
 
     const handleMouseOver = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
@@ -198,7 +199,6 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                 if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
                     item.end = true;
                     item.wall = false;
-
                 }
             })
         } else {
@@ -249,21 +249,15 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                 {nodes.map((node, i)=>{
                     let cN;
                     if (node.start === true){
-                        cN = "node start"
+                        cN = "start"
                     } else if (node.end === true){
-                        cN = "node end"
+                        cN = "end"
                     } else if(node.wall === true) {
-                        cN = "node wall"
-                    } else if(node.closestNode === true){
-                        cN= "node closest"
-                    } else if(node.visited === true){
-                        cN = "node visited"
-                    }  else {
-                        cN= "node"
+                        cN = "wall"
                     }
                   
                     return(
-                    <div key={i} className={cN} 
+                    <div key={i} className={className + " " + cN} 
                     id={node.x + "-" + node.y} 
                     onMouseDown={!isRunning ? handleMouseDown : undefined} 
                     onMouseUp={!isRunning ? handleMouseUp : undefined} 
