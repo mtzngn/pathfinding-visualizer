@@ -43,11 +43,11 @@ const aStar = async(nodes, setNodes, setIsRunning) => {
 
             for(const item of tempArr){
                 if(item.wall || item.visited) continue;
-
-                let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
-                let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
                 let up =( item.x === nodesToTest[0].x && item.y === nodesToTest[0].y - 1);
                 let down = (item.x === nodesToTest[0].x && item.y === nodesToTest[0].y + 1);
+                let left = (item.x === nodesToTest[0].x - 1  && item.y === nodesToTest[0].y);
+                let right = (item.x === nodesToTest[0].x + 1  && item.y === nodesToTest[0].y);
+
 
                 if(left || right || up || down){
                     if((nodesToTest[0].localD + 1) < item.localD){
