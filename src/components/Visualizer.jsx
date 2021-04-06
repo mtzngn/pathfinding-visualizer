@@ -114,7 +114,6 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     const [clicked, setClicked] = useState(false);
     const [moveStart, setMoveStart] = useState(false);
     const [moveEnd, setMoveEnd] = useState(false);
-    const [className, setClassName] = useState("node")
 
     const handleMouseOver = (e) => {
         let nodeId = e.target.attributes.id.value.split("-");
@@ -257,7 +256,7 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                     }
                   
                     return(
-                    <div key={i} className={className + " " + cN} 
+                    <div key={i} className={"node" + " " + cN} 
                     id={node.x + "-" + node.y} 
                     onMouseDown={!isRunning ? handleMouseDown : undefined} 
                     onMouseUp={!isRunning ? handleMouseUp : undefined} 
