@@ -32,7 +32,7 @@ align-items: flex-start;
             height: 20px;
         }
         border: 1px solid rgba(160,160,255,0.3);
-        transition: all 0.2s ease-in 0s;
+        transition: all 0s ease-in 0s;
         }
 
     .wall{
@@ -110,135 +110,34 @@ align-items: flex-start;
 }
 `
 
-const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
+const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning, extraClassN}) => {
     const [clicked, setClicked] = useState(false);
-    const [moveStart, setMoveStart] = useState(false);
-    const [moveEnd, setMoveEnd] = useState(false);
 
     const handleMouseOver = (e) => {
-        let nodeId = e.target.attributes.id.value.split("-");
-        let nodeClass = e.target.attributes[0].value;
-        let tempArr = [...nodes];
 
-        if(clicked) {
-            
-            if(!(nodeClass === "node start" || nodeClass === "node end")){
-                tempArr.forEach((node,i)=>{
-                    if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
-                        node.wall = true;
-                    }
-                })
-                setNodes([...tempArr])
-            } 
-        } 
     }
     const handleClick = (e) => {
-        let nodeId = e.target.attributes.id.value.split("-");
-        let nodeClass = e.target.attributes[0].value;
-        let tempArr = [...nodes];
-
-        if(!(nodeClass === "node start" || nodeClass === "node end")){
-            if(nodeClass === "node wall"){
-                tempArr.forEach((node,i)=>{
-                    if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
-                        node.wall = false;
-                    }
-                })
-            } else {
-                tempArr.forEach((node,i)=>{
-                    if(node.x === parseInt(nodeId[0]) && node.y === parseInt(nodeId[1])){
-                        node.wall = true;
-                    }
-                })
+        document.getElementById(e.target.id).className = "wall node"
+        console.log(e.target.id.split("-"))
+        nodes.forEach((node)=>{
+            if (node.x === e.target.id.split("-")[0] && node.y === e.target.id.split("-")[0]) {
+                node.wall = true;
             }
-            setNodes([...tempArr])
-        } 
+        })
+
     }
 
     const handleMouseDown = (e) => {
-        let tempArr = [...nodes];
-
-        if(e.target.attributes[0].value === "node start"){
-            tempArr.forEach((item)=>{
-                if(item.start === true){
-                    item.start = false
-                }
-            })
-            setMoveStart(true)
-        } else if(e.target.attributes[0].value === "node end"){
-            tempArr.forEach((item)=>{
-                if(item.end === true){
-                    item.end = false
-                }
-            })
-            setMoveEnd(true)
-        } else {
-            setClicked(true)
-        }
-        setNodes([...tempArr])
 
     }
     const handleMouseUp = (e) => {
-        let tempArr = [...nodes];
-        let nodeId = e.target.attributes.id.value.split("-");
 
-        if(moveStart){
-            e.target.attributes[0].value = "node start"
-            setMoveStart(false)
-            tempArr.forEach((item)=>{
-                if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
-                    item.start = true;
-                    item.wall = false;
-                }
-            })
-        } else if(moveEnd) {
-            e.target.attributes[0].value = "node end"
-            setMoveEnd(false)
-            tempArr.forEach((item)=>{
-                if(item.x === parseInt(nodeId[0]) && item.y === parseInt(nodeId[1])){
-                    item.end = true;
-                    item.wall = false;
-                }
-            })
-        } else {
-            setClicked(false)
-        }
-        setNodes([...tempArr])
     }
     const handleOnMouseEnter = (e) =>{
-        let targetValue = e.target.attributes[0].value
 
-        if(moveStart){
-            if(targetValue === "node wall"){
-                e.target.attributes[0].value = "node start oldWall"
-            } else {
-                e.target.attributes[0].value = "node start"
-            }
-        }
-        if(moveEnd){
-            if(targetValue === "node wall"){
-                e.target.attributes[0].value = "node end oldWall"
-            } else {
-                e.target.attributes[0].value = "node end"
-            }
-        }
     }
     const handleOnMouseLeave = (e) => {
-        let targetValue = e.target.attributes[0].value
-        if(moveStart){
-            if(targetValue === "node start"){
-                e.target.attributes[0].value = "node"
-            } else if(targetValue === "node start oldWall"){
-                e.target.attributes[0].value = "node wall"
-            }
-        }
-        if(moveEnd){
-            if(targetValue === "node end"){
-                e.target.attributes[0].value = "node"
-            } else if(targetValue === "node end oldWall"){
-                e.target.attributes[0].value = "node wall"
-            }
-        }
+
     }
 
     return(
@@ -251,20 +150,20 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                         cN = "start"
                     } else if (node.end === true){
                         cN = "end"
-                    } else if(node.wall === true) {
-                        cN = "wall"
+                    } else {
+                        cN = ""
                     }
                   
                     return(
                     <div key={i} className={"node" + " " + cN} 
                     id={node.x + "-" + node.y} 
-                    onMouseDown={!isRunning ? handleMouseDown : undefined} 
-                    onMouseUp={!isRunning ? handleMouseUp : undefined} 
-                    onMouseOver={!isRunning ? handleMouseOver : undefined} 
-                    onMouseEnter={!isRunning ? handleOnMouseEnter : undefined}
-                    onMouseLeave={!isRunning ? handleOnMouseLeave : undefined}
+                    onMouseDown={handleMouseDown} 
+                    onMouseUp={handleMouseUp} 
+                    onMouseOver={handleMouseOver} 
+                    onMouseEnter={ handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
                     clicked={clicked.toString()}
-                    onClick={!isRunning ? handleClick : undefined}></div>         
+                    onClick={handleClick}></div>         
                     )
                 })}
             </div>
