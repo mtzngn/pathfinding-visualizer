@@ -110,13 +110,20 @@ align-items: flex-start;
 }
 `
 
-const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
+const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning, extraClassN}) => {
     const [clicked, setClicked] = useState(false);
 
     const handleMouseOver = (e) => {
 
     }
     const handleClick = (e) => {
+        document.getElementById(e.target.id).className = "wall node"
+        console.log(e.target.id.split("-"))
+        nodes.forEach((node)=>{
+            if (node.x === e.target.id.split("-")[0] && node.y === e.target.id.split("-")[0]) {
+                node.wall = true;
+            }
+        })
 
     }
 
@@ -143,8 +150,8 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                         cN = "start"
                     } else if (node.end === true){
                         cN = "end"
-                    } else if(node.wall === true) {
-                        cN = "wall"
+                    } else {
+                        cN = ""
                     }
                   
                     return(

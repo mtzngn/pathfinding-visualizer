@@ -8,10 +8,6 @@ const dijkstra = async(nodes, setNodes, setIsRunning) => {
     let startNode;
     let shortestPathFound = false;
 
-    const sleep = async(ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-
     const getEndPoints  = () => {
         tempArr.forEach((item,i)=>{
             if(item.end === true){
