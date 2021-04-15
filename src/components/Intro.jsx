@@ -51,11 +51,11 @@ const Intro = () =>{
         <StyledIntro close={close}>
             <div className="top">
                 <div className="container">
-                    <img className="intro-gif" src={drag}></img>
+                    <img className="intro-gif" alt="how to drag and drop nodes" src={drag}></img>
                     <h5>Drag and Drop to change the position</h5>
                 </div>
                 <div className="container">
-                    <img className="intro-gif" src={wall}></img>
+                    <img className="intro-gif" alt="how to create wall node" src={wall}></img>
                     <h5>Click or click and hold to create walls</h5>
                 </div>
             </div>

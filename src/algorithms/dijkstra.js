@@ -61,9 +61,7 @@ const dijkstra = async(nodes, setIsRunning) => {
             }
 
             nodesToTest[0].visited = true
-            if(nodesToTest[0].start !== true) {
-                visitedNodes.push(nodesToTest[0])
-            }
+            if(nodesToTest[0].start !== true) visitedNodes.push(nodesToTest[0]);
             nodesToTest.shift();
             nodesToTest.sort((a,b)=> a.localD - b.localD)
 

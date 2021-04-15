@@ -1,14 +1,11 @@
-const aStar = async(nodes, setNodes, setIsRunning) => {
+const aStar = async(nodes, setIsRunning) => {
     let endPoint;
     let tempArr = [...nodes];
     let nodesToTest = [];
+    let visitedNodes = [];
     let shortestPath = [];
     let startNode;
     let shortestPathFound = false;
-
-    const sleep = async(ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
       
     const getEndPoints  = () => {
         tempArr.forEach((item,i)=>{
@@ -57,12 +54,11 @@ const aStar = async(nodes, setNodes, setIsRunning) => {
                             continue;
                         }
                         nodesToTest.push(item)
-                        setNodes([...tempArr])
-                        await sleep(1)
                     }
                 }
             }
             nodesToTest[0].visited = true;
+            if(nodesToTest[0].start !== true) visitedNodes.push(nodesToTest[0]);
             nodesToTest.shift();
             nodesToTest.sort((a,b)=> a.heuristicD - b.heuristicD)
         }
@@ -83,8 +79,6 @@ const aStar = async(nodes, setNodes, setIsRunning) => {
                 }
                 if((item.x + "-" + item.y) === lastParent){
                    item.closestNode = true;
-                    setNodes([...tempArr])
-                    await sleep(25)
                    shortestPath.push(item.parentNode)
                 }
             }
@@ -95,6 +89,8 @@ const aStar = async(nodes, setNodes, setIsRunning) => {
     await createVisitedNodes();
     await extractShortestpath();
     await setIsRunning(false);
+    return [visitedNodes, shortestPath]
+
 
     // Start from startNode
     // add this to the nodeToTest array
