@@ -33,29 +33,27 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
         setIsRunning(true);
 
         if(currentSelection === "aStarSearch"){
-            aStar(nodes, setNodes, setIsRunning)
+            let aStarResult = await aStar(nodes, setIsRunning);
+            animate(aStarResult);
         } else if(currentSelection === "dijkstras"){
             let dijkstraResult = await dijkstra(nodes, setIsRunning);
-            animateDijkstra(dijkstraResult)
+            animate(dijkstraResult);
         }
         setNeedForClear(true)
     }
-    const animateDijkstra = (dijkstraResult) => {
-        for(let i = 0; i < dijkstraResult[0].length; i++) {
+    const animate = (resultArr) => {
+        for(let i = 0; i < resultArr[0].length; i++) {
             
-            if(i === dijkstraResult[0].length - 1) {
+            if(i === resultArr[0].length - 1) {
                 setTimeout(()=> {
-                    animateShortestPath(dijkstraResult[1])
+                    animateShortestPath(resultArr[1])
                 }, i * 10)
             }
-            
             setTimeout(()=>{
-                const node = dijkstraResult[0][i];
+                const node = resultArr[0][i];
                 document.getElementById(node.id).className = "node visited"
             }, i * 10)
-
         }
-
     }
     const animateShortestPath = (shortestPath) => {
 
@@ -71,7 +69,6 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             if(item.wall === true) item.wall = false;
         });
         setNodes([...newNodes])
-
     }
     const handleClearPath = async() => {
         if(needForClear) {
@@ -83,7 +80,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                 item.localD = Infinity;
                 item.globalD = Infinity;
                 item.heuristicD = Infinity;
-                if(!(item.start || item.end)) document.getElementById(item.id).className = "node"
+                if(!(item.start || item.end) && !item.wall) document.getElementById(item.id).className = "node"
             });
             await setNodes([...newNodes]);
         }
@@ -102,7 +99,6 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                 node.end = true;
             }
         });
-
         setNodes([...newNodes])
     }
 
