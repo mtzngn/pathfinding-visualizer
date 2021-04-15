@@ -169,17 +169,17 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
                 {nodes.map((node, i)=>{
                     let cN;
                     if (node.start === true){
-                        cN = "start"
+                        cN = "node start"
                     } else if (node.end === true){
-                        cN = "end"
+                        cN = "node end"
                     } else if (node.wall){
-                        cN = "wall"
+                        cN = "node wall"
                     } else {
-                        cN = ""
+                        cN = "node"
                     }
                   
                     return(
-                    <div key={i} className={"node" + " " + cN} 
+                    <div key={i} className={cN} 
                     id={node.x + "-" + node.y} 
                     onMouseDown={handleMouseDown} 
                     onMouseUp={handleMouseUp} 

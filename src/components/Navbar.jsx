@@ -15,6 +15,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
     const [dijkstras, setDijkstras] =useState("dijkstras");
     const [currentSelection, setCurrentSelection] = useState("");
     const [choosed, setChoosed] = useState("");
+    const [needForClear, setNeedForClear] = useState(false)
 
     const handleAStarSearch = (e) => {
         setCurrentSelection(e.target.attributes[0].value)
@@ -30,15 +31,16 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             alert("Please Pick an Algorithm");
             return;
         }
-        await clearPath();
+        await handleClearPath();
         setIsRunning(true);
 
         if(currentSelection === "aStarSearch"){
             aStar(nodes, setNodes, setIsRunning)
         } else if(currentSelection === "dijkstras"){
-            let dijkstraResult = await dijkstra(nodes, setNodes, setIsRunning);
+            let dijkstraResult = await dijkstra(nodes, setIsRunning);
             animateDijkstra(dijkstraResult)
         }
+        setNeedForClear(true)
     }
     const animateDijkstra = (dijkstraResult) => {
         for(let i = 0; i < dijkstraResult[0].length; i++) {
@@ -51,7 +53,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             
             setTimeout(()=>{
                 const node = dijkstraResult[0][i];
-                document.getElementById(node.x + "-" + node.y).className = "node visited"
+                document.getElementById(node.id).className = "node visited"
             }, i * 10)
 
         }
@@ -66,52 +68,46 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
         }
     }
     const handleClearWalls = () => {
-        let tempArr = [...nodes]
-        tempArr.forEach((item)=>{
-            if(item.wall === true){
-                item.wall = false;
-            }
+        let newNodes = [...nodes]
+        newNodes.forEach((item)=>{
+            if(item.wall === true) item.wall = false;
         });
-        setNodes([...tempArr])
+        setNodes([...newNodes])
 
     }
-    const clearPath = async() => {
-        let tempArr = [...nodes]
-        tempArr.forEach((item)=>{
-            item.visited = false;
-            item.closestNode = false;
-            item.parentNode = null;
-            item.localD = Infinity;
-            item.globalD = Infinity;
-            item.heuristicD = Infinity;
-        });
-        await setNodes([...tempArr]);
-
+    const handleClearPath = async() => {
+        if(needForClear) {
+            let newNodes = [...nodes]
+            newNodes.forEach((item)=>{
+                item.visited = false;
+                item.closestNode = false;
+                item.parentNode = null;
+                item.localD = Infinity;
+                item.globalD = Infinity;
+                item.heuristicD = Infinity;
+                if(!(item.start || item.end)) document.getElementById(item.id).className = "node"
+            });
+            await setNodes([...newNodes]);
+        }
     }
-    const clearBoard = () => {
-        clearPath();
-        let tempArr = [...nodes]
-        tempArr.forEach((item)=>{
-            item.wall = false;
-            item.start = false;
-            item.end = false;
-        });
-        tempArr.forEach((node,i)=>{
+    const handleClearBoard = () => {
+        handleClearPath();
+        let newNodes = [...nodes]
+        newNodes.forEach((node)=>{
+            node.wall = false;
+            node.start = false;
+            node.end = false;
             if(node.x === 15 && node.y === 15){
                 node.start = true
             }
             if(node.x === 35 && node.y === 30){
                 node.end = true;
             }
-        })
-        setNodes([...tempArr])
+        });
+
+        setNodes([...newNodes])
     }
-    const handleClearPath = () => {
-        clearPath();
-    }
-    const handleClearBoard = () => {
-        clearBoard();
-    }
+
     return(
     <StyledNavbar >
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">

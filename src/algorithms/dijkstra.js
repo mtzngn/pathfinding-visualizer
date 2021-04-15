@@ -1,4 +1,4 @@
-const dijkstra = async(nodes, setNodes, setIsRunning) => {
+const dijkstra = async(nodes, setIsRunning) => {
 
     let endPoint;
     let tempArr = [...nodes];
