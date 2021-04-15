@@ -18,7 +18,7 @@ function App() {
   useEffect(()=>{
       for(let i = 0; i < 31 ; i++){
           for(let j = 0; j < 48; j++){
-              nodeArr.push(new Nodes(j,i, false, false, Infinity, Infinity, Infinity, null, false, false, false));
+              nodeArr.push(new Nodes(j,i, false, false, Infinity, Infinity, Infinity, null, false, false, false, `${j}-${i}`));
           }
       }
       nodeArr.forEach((node,i)=>{
