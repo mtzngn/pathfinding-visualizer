@@ -110,34 +110,56 @@ align-items: flex-start;
 }
 `
 
-const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning, extraClassN}) => {
+const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     const [clicked, setClicked] = useState(false);
+    const [moveStart, setMoveStart] = useState(false);
+    const [moveEnd, setMoveEnd] = useState(false);
 
     const handleMouseOver = (e) => {
-
+        if(clicked) handleClick(e);
     }
     const handleClick = (e) => {
-        document.getElementById(e.target.id).className = "wall node"
-        console.log(e.target.id.split("-"))
-        nodes.forEach((node)=>{
-            if (node.x === e.target.id.split("-")[0] && node.y === e.target.id.split("-")[0]) {
-                node.wall = true;
-            }
-        })
-
+        let newNode = [...nodes]
+        let node =  getCurrentNode(e, [...nodes])
+        if (!node.start || !node.end) {
+            node.wall = !node.wall
+            setNodes([...newNode])
+        };
     }
 
     const handleMouseDown = (e) => {
-
+        let node =  getCurrentNode(e, [...nodes])
+        if (node.start) setMoveStart(true)
+        if (node.end) setMoveEnd(true)
+        if (!node.start && !node.end) setClicked(true)
     }
     const handleMouseUp = (e) => {
+        let node =  getCurrentNode(e, [...nodes])
+        if (!node.start || !node.end) setClicked(false);
+        if(moveStart) setMoveStart(false)
+        if(moveEnd) setMoveEnd(false)
 
     }
     const handleOnMouseEnter = (e) =>{
-
+        let newNodes = [...nodes]
+        let node =  getCurrentNode(e, [...nodes])
+        if (moveStart) node.start = true;
+        if (moveEnd) node.end = true;
+        if (moveStart || moveEnd) setNodes([...newNodes])
     }
     const handleOnMouseLeave = (e) => {
+        let newNodes = [...nodes]
+        let node =  getCurrentNode(e, [...nodes])
+        if (moveStart) node.start = false;
+        if (moveEnd) node.end = false;
+        if (moveStart || moveEnd) setNodes([...newNodes])
 
+    }
+    const getCurrentNode = (e, newNodes) => {
+        let node = newNodes.find(n => {
+            return n.id === e.target.id.toString()
+        });
+        return node;
     }
 
     return(
@@ -150,6 +172,8 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning, extraClassN}) =>
                         cN = "start"
                     } else if (node.end === true){
                         cN = "end"
+                    } else if (node.wall){
+                        cN = "wall"
                     } else {
                         cN = ""
                     }
@@ -169,6 +193,7 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning, extraClassN}) =>
             </div>
         </StyledContainer>
     )
+
 }
 
 export default Visualizer;

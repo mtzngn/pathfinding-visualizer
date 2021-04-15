@@ -1,5 +1,5 @@
 export default class Nodes {
-    constructor(x, y, end, start, heuristicD, localD, globalD, parentNode, visited, wall, closestNode ) {
+    constructor(x, y, end, start, heuristicD, localD, globalD, parentNode, visited, wall, closestNode, id ) {
         this.x = x;
         this.y = y;
         this.heuristicD = heuristicD;
@@ -11,9 +11,8 @@ export default class Nodes {
         this.visited = visited;
         this.wall = wall;
         this.closestNode = closestNode;
+        this.id = id;
     }
-    move = () => {
-        console.log(`this is`)
-    }
+
    
 }
