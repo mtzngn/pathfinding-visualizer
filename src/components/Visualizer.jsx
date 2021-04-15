@@ -120,10 +120,11 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     }
     const handleClick = (e) => {
         let newNode = [...nodes]
-        let node =  getCurrentNode(e, newNode)
-        node.wall = !node.wall;
-        setNodes([...newNode])
-
+        let node =  getCurrentNode(e, [...nodes])
+        if (!node.start || !node.end) {
+            node.wall = !node.wall
+            setNodes([...newNode])
+        };
     }
 
     const handleMouseDown = (e) => {
@@ -144,14 +145,14 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
         let node =  getCurrentNode(e, [...nodes])
         if (moveStart) node.start = true;
         if (moveEnd) node.end = true;
-        setNodes([...newNodes])
+        if (moveStart || moveEnd) setNodes([...newNodes])
     }
     const handleOnMouseLeave = (e) => {
         let newNodes = [...nodes]
         let node =  getCurrentNode(e, [...nodes])
         if (moveStart) node.start = false;
         if (moveEnd) node.end = false;
-        setNodes([...newNodes])
+        if (moveStart || moveEnd) setNodes([...newNodes])
 
     }
     const getCurrentNode = (e, newNodes) => {
