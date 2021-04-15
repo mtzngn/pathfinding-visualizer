@@ -11,8 +11,6 @@ height: fit-content;
 `
 
 const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
-    const [aStarSearch, setAStarSearch] = useState("aStarSearch");
-    const [dijkstras, setDijkstras] =useState("dijkstras");
     const [currentSelection, setCurrentSelection] = useState("");
     const [choosed, setChoosed] = useState("");
     const [needForClear, setNeedForClear] = useState(false)
@@ -116,8 +114,8 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             <Navbar.Collapse id="responsive-navbar-nav">            
                 <Nav className="justify-content-between" style={{ flex: 1}}>
                     <NavDropdown title="Algorithms" id="collasible-nav-dropdown">
-                        <NavDropdown.Item onClick={handleAStarSearch} value={aStarSearch} href="#action/3.1">A<sup>*</sup> Search</NavDropdown.Item>
-                        <NavDropdown.Item onClick={handleDijkstra} value={dijkstras} href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleAStarSearch} value="aStarSearch" href="#action/3.1">A<sup>*</sup> Search</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleDijkstra} value="dijkstras" href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Coming Soon</NavDropdown.Item>
