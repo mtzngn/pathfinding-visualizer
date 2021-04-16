@@ -17,7 +17,7 @@ align-items: flex-start;
     height: 775px;
     @media(min-width: 1024px){
         width: 960px;
-        height: 500px;
+        height: 620px;
         transform: scale(0.9);
     }
     display:flex;
@@ -47,7 +47,7 @@ align-items: flex-start;
         background-repeat: no-repeat;
         background-size:cover;
         animation-name: example;
-        animation-duration: 0.5s;
+        animation-duration: 0.3s;
     }
     .start{
         background-image: url(${arrowImg});

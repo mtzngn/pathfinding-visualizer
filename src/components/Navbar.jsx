@@ -3,6 +3,7 @@ import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
 import aStar from "../algorithms/aStar"
 import dijkstra from "../algorithms/dijkstra"
+import randomMaze from "../algorithms/randomMaze"
 
 const StyledNavbar = styled.div`
 width: 100%;
@@ -63,6 +64,10 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             }, i * 50)
         }
     }
+
+    const handleRandomMaze = () => {
+        randomMaze([...nodes]);
+    }
     const handleClearWalls = () => {
         let newNodes = [...nodes]
         newNodes.forEach((item)=>{
@@ -114,7 +119,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                         <NavDropdown.Item onClick={handleDijkstra} value="dijkstras" href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Coming Soon</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleRandomMaze} href="#action/3.1">Random Maze</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Coming Soon</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
                     </NavDropdown>
