@@ -65,8 +65,13 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
         }
     }
 
-    const handleRandomMaze = () => {
-        randomMaze([...nodes]);
+    const handleRandomMaze = async() => {
+        let mazeArr = await randomMaze([...nodes]);
+        for (let i = 0; i < mazeArr.length; i++) {
+            if(mazeArr[i].wall) {
+                document.getElementById(mazeArr[i].id).className= "node wall"
+            }
+        }
     }
     const handleClearWalls = () => {
         let newNodes = [...nodes]
