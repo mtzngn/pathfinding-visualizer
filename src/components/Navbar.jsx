@@ -4,6 +4,7 @@ import styled from "styled-components";
 import aStar from "../algorithms/aStar"
 import dijkstra from "../algorithms/dijkstra"
 import randomMaze from "../algorithms/randomMaze"
+import randomMaze2 from "../algorithms/randomMaze2"
 
 const StyledNavbar = styled.div`
 width: 100%;
@@ -73,6 +74,12 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             }
         }
     }
+    const handleRandomMaze2 = async() => {
+        let mazeArr = await randomMaze2([...nodes]);
+        for (let i = 0; i < mazeArr.length; i++) {
+            document.getElementById(mazeArr[i].id).className= "node wall"
+        }
+    }
     const handleClearWalls = () => {
         let newNodes = [...nodes]
         newNodes.forEach((item)=>{
@@ -125,7 +132,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleRandomMaze} href="#action/3.1">Random Maze</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Coming Soon</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleRandomMaze2} href="#action/3.2">Random Maze2</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
                     </NavDropdown>
                     <Button variant="success" id="btn" onClick={handleVisualize} disabled={isRunning}>Visualize{choosed}</Button>
