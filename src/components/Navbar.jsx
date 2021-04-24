@@ -3,7 +3,7 @@ import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import styled from "styled-components";
 import aStar from "../algorithms/aStar"
 import dijkstra from "../algorithms/dijkstra"
-import randomMaze from "../algorithms/randomMaze"
+import binaryTree from "../algorithms/binaryTree"
 import randomMaze2 from "../algorithms/randomMaze2"
 
 const StyledNavbar = styled.div`
@@ -66,8 +66,9 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
         }
     }
 
-    const handleRandomMaze = async() => {
-        let mazeArr = await randomMaze([...nodes]);
+    const handleBinaryMaze = async() => {
+        handleClearWalls();
+        let mazeArr = await binaryTree([...nodes]);
         for (let i = 0; i < mazeArr.length; i++) {
             if(mazeArr[i].wall) {
                 document.getElementById(mazeArr[i].id).className= "node wall"
@@ -86,6 +87,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
             if(item.wall === true) item.wall = false;
         });
         setNodes([...newNodes])
+
     }
     const handleClearPath = async() => {
         if(needForClear) {
@@ -131,7 +133,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                         <NavDropdown.Item onClick={handleDijkstra} value="dijkstras" href="#action/3.2">Dijkstra's ALgorithm</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
-                        <NavDropdown.Item onClick={handleRandomMaze} href="#action/3.1">Random Maze</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleBinaryMaze} href="#action/3.1">Binary Tree Algorithm</NavDropdown.Item>
                         <NavDropdown.Item onClick={handleRandomMaze2} href="#action/3.2">Random Maze2</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
                     </NavDropdown>
