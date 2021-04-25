@@ -67,11 +67,13 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
     }
 
     const handleBinaryMaze = async() => {
-        handleClearWalls();
+        // handleClearWalls();
         let mazeArr = await binaryTree([...nodes]);
         for (let i = 0; i < mazeArr.length; i++) {
             if(mazeArr[i].wall) {
-                document.getElementById(mazeArr[i].id).className= "node wall"
+                setTimeout(()=>{
+                    document.getElementById(mazeArr[i].id).className= "node wall"
+                }, i * 3)
             }
         }
     }
