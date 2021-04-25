@@ -4,7 +4,7 @@ import styled from "styled-components";
 import aStar from "../algorithms/aStar"
 import dijkstra from "../algorithms/dijkstra"
 import binaryTree from "../algorithms/binaryTree"
-import randomMaze2 from "../algorithms/randomMaze2"
+import randomMaze from "../algorithms/randomMaze"
 
 const StyledNavbar = styled.div`
 width: 100%;
@@ -67,18 +67,17 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
     }
 
     const handleBinaryMaze = async() => {
-        // handleClearWalls();
+        handleClearWalls();
         let mazeArr = await binaryTree([...nodes]);
         for (let i = 0; i < mazeArr.length; i++) {
             if(mazeArr[i].wall) {
-                setTimeout(()=>{
-                    document.getElementById(mazeArr[i].id).className= "node wall"
-                }, i * 3)
+                document.getElementById(mazeArr[i].id).className= "node wall"
             }
         }
     }
-    const handleRandomMaze2 = async() => {
-        let mazeArr = await randomMaze2([...nodes]);
+    const handleRandomMaze = async() => {
+        handleClearWalls();
+        let mazeArr = await randomMaze([...nodes]);
         for (let i = 0; i < mazeArr.length; i++) {
             document.getElementById(mazeArr[i].id).className= "node wall"
         }
@@ -136,8 +135,7 @@ const NavbarComponenet = ({ nodes, setNodes, isRunning, setIsRunning }) => {
                     </NavDropdown>
                     <NavDropdown title="Mazes & Patterns" id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleBinaryMaze} href="#action/3.1">Binary Tree Algorithm</NavDropdown.Item>
-                        <NavDropdown.Item onClick={handleRandomMaze2} href="#action/3.2">Random Maze2</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Coming Soon</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleRandomMaze} href="#action/3.2">Random Maze</NavDropdown.Item>
                     </NavDropdown>
                     <Button variant="success" id="btn" onClick={handleVisualize} disabled={isRunning}>Visualize{choosed}</Button>
                     <Nav.Link  onClick={handleClearWalls} href="#deets" disabled={isRunning}>Clear Walls</Nav.Link>
