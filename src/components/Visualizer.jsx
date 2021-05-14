@@ -128,16 +128,22 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     }
 
     const handleMouseDown = (e) => {
-        let node =  getCurrentNode(e, [...nodes])
-        if (node.start) setMoveStart(true)
-        if (node.end) setMoveEnd(true)
-        if (!node.start && !node.end) setClicked(true)
+        if (e.target.className === "node start") {
+            setMoveStart(true)
+        }else if (e.target.className === "node end") {
+            setMoveEnd(true)
+        } else {
+            setClicked(true)
+        }
     }
     const handleMouseUp = (e) => {
-        let node =  getCurrentNode(e, [...nodes])
-        if (!node.start || !node.end) setClicked(false);
-        if(moveStart) setMoveStart(false)
-        if(moveEnd) setMoveEnd(false)
+        if (e.target.className === "node start") {
+            setMoveStart(false)
+        }else if (e.target.className === "node end") {
+            setMoveEnd(false)
+        } else {
+            setClicked(false)
+        }
 
     }
     const handleOnMouseEnter = (e) =>{
