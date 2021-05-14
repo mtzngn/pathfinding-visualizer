@@ -31,15 +31,16 @@ align-items: flex-start;
             width: 20px;
             height: 20px;
         }
-        border: 1px solid rgba(160,160,255,0.3);
+        border: 1px solid rgba(160,160,255,0.2);
         transition: all 0s ease-in 0s;
         }
 
     .wall{
         background-color: #03506f;
         animation-name: example;
-        animation-duration: 0.15s;
-        border: 1px solid #03506f;
+        animation-duration: 0.2s;
+        animation-timing-function: ease-in-out;
+        border: none;
 
     }
     .start, .end{

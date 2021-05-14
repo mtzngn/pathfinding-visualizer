@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import drag from "../../assets/drag-starting-point.gif";
 import wall from "../../assets/wall.gif";
 
-
 const StyledIntro1 = styled.div`
-
     display: flex;
     .container{
         display: flex;
@@ -21,9 +19,9 @@ const StyledIntro1 = styled.div`
 
 `
 
-const Intro1 = ( { close } ) => {
+const Intro1 = () => {
     return (
-        <StyledIntro1 close={close}>
+        <StyledIntro1>
 
         <div className="container">
             <img className="intro-gif" alt="how to drag and drop nodes" src={drag}></img>

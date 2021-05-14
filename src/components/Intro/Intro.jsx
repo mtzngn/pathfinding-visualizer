@@ -4,7 +4,6 @@ import Intro1 from './Intro1';
 import Intro2 from './Intro2';
 import styled from "styled-components";
 
-
 const StyledIntro = styled.div`
     position: fixed;
     top: 50%;
