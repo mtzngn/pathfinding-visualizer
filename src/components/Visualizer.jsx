@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import arrowImg from "../assets/arrow-50.png";
 import targetImg from "../assets/target-50.png";
-import Intro from "./Intro";
+import Intro from "./Intro/Intro";
 
 const StyledContainer = styled.div`
 width: 100%;
