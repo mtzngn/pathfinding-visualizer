@@ -116,13 +116,22 @@ const Visualizer = ({ nodes, setNodes, isRunning, setIsRunning}) => {
     const [moveEnd, setMoveEnd] = useState(false);
 
     const handleMouseOver = (e) => {
-        if(clicked) handleClick(e);
+        let newNode = [...nodes];
+        let node =  getCurrentNode(e, [...nodes]);
+        if(clicked) {
+            if (!node.start || !node.end) {
+                node.wall = true;
+                e.target.className = "node wall";
+                setNodes([...newNode])
+            };
+        }
     }
     const handleClick = (e) => {
         let newNode = [...nodes]
         let node =  getCurrentNode(e, [...nodes])
         if (!node.start || !node.end) {
             node.wall = !node.wall
+            e.target.className = "node wall";
             setNodes([...newNode])
         };
     }

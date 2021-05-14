@@ -3,7 +3,7 @@ import styled from "styled-components";
 import arrow from "../assets/arrow-50.png"
 import end from "../assets/target-50.png"
 
-const StyledDiv = styled.div`
+const StyledInfo = styled.div`
 height: 7vh;
 width: 100%;
 display: flex;
@@ -77,9 +77,9 @@ align-items: center;
 }
 `
 
-const StyledInfo = () =>{
+const Info = () =>{
     return(
-        <StyledDiv>
+        <StyledInfo>
         <div className="left">
         <div className="box">
           <div className="visual start"></div>
@@ -124,8 +124,8 @@ const StyledInfo = () =>{
           </div>
         </div>
     </div> 
-    </StyledDiv>
+    </StyledInfo>
     )
 }
 
-export default StyledInfo;
+export default Info;

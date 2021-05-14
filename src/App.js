@@ -2,8 +2,8 @@ import React, { useState, useEffect} from "react";
 import './App.css';
 import NavbarComponenet from "./components/Navbar"
 import Visualizer from "./components/Visualizer"
-import Nodes from "./components/Nodes";
-import StyledInfo from "./components/StyledInfo"
+import Nodes from "./utils/Nodes";
+import Info from "./components/StyledInfo"
 
 
 
@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="App">
       <NavbarComponenet nodes={nodes} setNodes={setNodes} isRunning={isRunning} setIsRunning={setIsRunning}/>
-      <StyledInfo/>
+      <Info/>
       <Visualizer nodes={nodes} setNodes={setNodes} isRunning={isRunning} setIsRunning={setIsRunning}/>
     </div>
   );
